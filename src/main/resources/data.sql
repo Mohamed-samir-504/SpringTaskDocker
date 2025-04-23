@@ -24,3 +24,14 @@ VALUES
     (3, 5, 2),
     (4, 8, 3),
     (5, 7, 3);
+
+
+ALTER TABLE rating
+DROP CONSTRAINT FKRBUQJO7WYI9W281UAEUPNK26M;
+
+ALTER TABLE rating
+    ADD CONSTRAINT fk_course_rating
+        FOREIGN KEY (course_id)
+            REFERENCES course(id)
+            ON DELETE CASCADE;
+
