@@ -35,10 +35,10 @@ class CourseIntegrationTest {
     @Autowired
     private CourseRepository courseRepository;
 
-    @BeforeEach
-    void clearDb() {
-       courseRepository.deleteAll();
-    }
+//    @BeforeEach
+//    void clearDb() {
+//       courseRepository.deleteAll();
+//    }
 
     @Test
     void shouldReturnCourseDTO_whenCourseExistsByName() throws Exception {
