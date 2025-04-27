@@ -33,10 +33,10 @@ public class CourseControllerWireMockTest {
 
     @BeforeAll
     static void setup() {
-        wireMockServer = new WireMockServer(8089);
+        wireMockServer = new WireMockServer(8099);
         wireMockServer.start();
 
-        configureFor("localhost", 8089);
+        configureFor("localhost", 8099);
     }
 
     @AfterAll

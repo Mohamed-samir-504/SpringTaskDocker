@@ -1,10 +1,13 @@
 package org.example.springtaskdocker.Controllers;
 
+import generatedSources.org.example.course.CourseXSD;
 import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mappers.CourseMapper;
 import org.example.springtaskdocker.Models.Course;
 import org.example.springtaskdocker.Services.CourseService;
 import org.example.springtaskdocker.Services.ExternalApiService;
+import org.example.springtaskdocker.Services.ExternalXSDService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -16,6 +19,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 public class CourseController {
@@ -23,14 +27,18 @@ public class CourseController {
     //It will use SoftwareCourseRecommender bean
     CourseService courseService;
 
+
     ExternalApiService externalApiService;
+
+    ExternalXSDService externalXSDService;
 
     @Autowired
     CourseMapper courseMapper;
 
-    public CourseController(CourseService courseService, ExternalApiService externalApiService) {
+    public CourseController(CourseService courseService, ExternalApiService externalApiService, ExternalXSDService externalXSDService) {
         this.courseService = courseService;
         this.externalApiService = externalApiService;
+        this.externalXSDService = externalXSDService;
 
     }
 
@@ -114,7 +122,13 @@ public class CourseController {
                 .body(json);
     }
 
-
-
+    @GetMapping("/discover")
+    public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
+        List<CourseXSD> coursesFromMock = externalXSDService.fetchCoursesFromMock();
+        List<CourseXSDDTO> courseDTOs = coursesFromMock.stream()
+                .map(externalXSDService::mapToDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(courseDTOs);
+    }
 
 }

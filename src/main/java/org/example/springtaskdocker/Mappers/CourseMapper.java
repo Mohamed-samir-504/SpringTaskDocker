@@ -4,8 +4,6 @@ import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.Models.Course;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.List;
 
