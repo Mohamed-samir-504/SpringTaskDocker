@@ -7,6 +7,7 @@ import org.example.springtaskdocker.Models.Course;
 import org.example.springtaskdocker.SecurityConfig;
 import org.example.springtaskdocker.Services.CourseService;
 import org.example.springtaskdocker.Services.ExternalApiService;
+import org.example.springtaskdocker.Services.ExternalXSDService;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -45,6 +46,10 @@ public class CourseControllerTest {
 
     @MockitoBean
     ExternalApiService externalApiService;
+
+    @MockitoBean
+    ExternalXSDService externalXSDService;
+
 
     @Test
     void viewCourse_shouldReturnCourseDTOByName() throws Exception {

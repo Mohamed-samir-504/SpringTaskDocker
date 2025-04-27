@@ -1,6 +1,6 @@
 package org.example.springtaskdocker;
 
-import generatedSources.org.example.course.CourseXSD;
+import com.generatedSources.CourseXSD;
 import jakarta.xml.bind.annotation.XmlAccessType;
 import jakarta.xml.bind.annotation.XmlAccessorType;
 import jakarta.xml.bind.annotation.XmlElement;

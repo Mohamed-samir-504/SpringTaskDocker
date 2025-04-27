@@ -1,6 +1,7 @@
 package org.example.springtaskdocker.Controllers;
 
-import generatedSources.org.example.course.CourseXSD;
+
+import com.generatedSources.CourseXSD;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mappers.CourseMapper;
