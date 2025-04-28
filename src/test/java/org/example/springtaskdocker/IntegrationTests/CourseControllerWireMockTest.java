@@ -10,12 +10,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
-import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
-
-
 import com.github.tomakehurst.wiremock.WireMockServer;
-import org.springframework.test.web.servlet.RequestBuilder;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -35,10 +30,10 @@ public class CourseControllerWireMockTest {
 
     @BeforeAll
     static void setup() {
-        wireMockServer = new WireMockServer(options().dynamicPort());
+        wireMockServer = new WireMockServer(8089);
         wireMockServer.start();
 
-        configureFor("localhost", wireMockServer.port());
+        configureFor("localhost", 8089);
     }
 
     @AfterAll
@@ -69,7 +64,6 @@ public class CourseControllerWireMockTest {
                               </course>
                         </courses>
                     """)));
-
 
 
         mockMvc.perform(get("/discover").with(httpBasic("admin", "admin123")))

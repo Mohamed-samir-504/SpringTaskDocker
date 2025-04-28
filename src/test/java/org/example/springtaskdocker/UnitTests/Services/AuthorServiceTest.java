@@ -2,7 +2,6 @@ package org.example.springtaskdocker.UnitTests.Services;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.springtaskdocker.Models.Author;
-import org.example.springtaskdocker.Models.Course;
 import org.example.springtaskdocker.Repositories.AuthorRepository;
 import org.example.springtaskdocker.Services.AuthorService;
 import org.junit.jupiter.api.*;
@@ -10,10 +9,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 
 import java.util.List;
 import java.util.Optional;

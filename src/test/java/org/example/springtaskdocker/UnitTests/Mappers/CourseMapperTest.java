@@ -8,12 +8,7 @@ import org.example.springtaskdocker.Models.Course;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Collections;
 import java.util.List;
-
-
-
 
 public class CourseMapperTest {
 

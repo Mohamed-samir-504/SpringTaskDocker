@@ -2,7 +2,6 @@ package org.example.springtaskdocker.Services;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.springtaskdocker.Exceptions.GlobalExceptionHandler;
 import org.example.springtaskdocker.Repositories.CourseRepository;
 import org.example.springtaskdocker.Models.Course;
 import org.springframework.beans.factory.annotation.Autowired;

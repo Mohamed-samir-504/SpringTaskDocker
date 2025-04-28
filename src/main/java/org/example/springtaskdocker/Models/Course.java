@@ -2,7 +2,6 @@ package org.example.springtaskdocker.Models;
 
 import jakarta.persistence.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
