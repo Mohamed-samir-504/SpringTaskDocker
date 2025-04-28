@@ -10,6 +10,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
+import static com.github.tomakehurst.wiremock.core.WireMockConfiguration.options;
+
 
 import com.github.tomakehurst.wiremock.WireMockServer;
 import org.springframework.test.web.servlet.RequestBuilder;
@@ -33,10 +35,10 @@ public class CourseControllerWireMockTest {
 
     @BeforeAll
     static void setup() {
-        wireMockServer = new WireMockServer(8099);
+        wireMockServer = new WireMockServer(options().dynamicPort());
         wireMockServer.start();
 
-        configureFor("localhost", 8099);
+        configureFor("localhost", wireMockServer.port());
     }
 
     @AfterAll
@@ -45,27 +47,40 @@ public class CourseControllerWireMockTest {
     }
 
     @Test
-    void getRating_shouldReturnCustomJsonResponse() throws Exception {
-        //Stub external API to return custom JSON
-        stubFor(WireMock.get(urlEqualTo("/service/1"))
+    void getXSDService_shouldReturnCustomJsonResponse() throws Exception {
+
+        stubFor(WireMock.get(urlEqualTo("/xsdService/list"))
                 .willReturn(WireMock.aResponse()
                         .withStatus(200)
-                        .withHeader("Content-Type", "application/json")
+                        .withHeader("Content-Type", "application/xml")
                         .withBody("""
-                        {
-                            "courseId": 1,
-                            "rating": 5,
-                            "reviews": 125
-                        }
+                        <courses xmlns="http://example.org/course">
+                              <course>
+                                   <id>1</id>
+                                   <name>Business analysis</name>
+                                   <description>Learn Business analysis</description>
+                                   <credit>3</credit>
+                              </course>
+                              <course>
+                                   <id>2</id>
+                                   <name>Business administration</name>
+                                   <description>Learn Business administration</description>
+                                   <credit>4</credit>
+                              </course>
+                        </courses>
                     """)));
 
 
 
-        mockMvc.perform(get("/courses/1/service").with(httpBasic("admin", "admin123")))
+        mockMvc.perform(get("/discover").with(httpBasic("admin", "admin123")))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.courseId").value(1))
-                .andExpect(jsonPath("$.rating").value(5))
-                .andExpect(jsonPath("$.reviews").value(125));
+                .andExpect(jsonPath("$.length()").value(2)) // 2 courses returned
+                .andExpect(jsonPath("$[0].name").value("Business analysis"))
+                .andExpect(jsonPath("$[0].description").value("Learn Business analysis"))
+                .andExpect(jsonPath("$[0].credit").value(3))
+                .andExpect(jsonPath("$[1].name").value("Business administration"))
+                .andExpect(jsonPath("$[1].description").value("Learn Business administration"))
+                .andExpect(jsonPath("$[1].credit").value(4));
     }
 }

@@ -29,16 +29,13 @@ public class CourseController {
     CourseService courseService;
 
 
-    ExternalApiService externalApiService;
-
     ExternalXSDService externalXSDService;
 
     @Autowired
     CourseMapper courseMapper;
 
-    public CourseController(CourseService courseService, ExternalApiService externalApiService, ExternalXSDService externalXSDService) {
+    public CourseController(CourseService courseService, ExternalXSDService externalXSDService) {
         this.courseService = courseService;
-        this.externalApiService = externalApiService;
         this.externalXSDService = externalXSDService;
 
     }
@@ -114,14 +111,14 @@ public class CourseController {
     }
 
 
-    @GetMapping("/courses/{id}/service")
-    public ResponseEntity<String> getRating(@PathVariable Long id) {
-        String json = externalApiService.getService(id); // returns raw JSON string
-        return ResponseEntity
-                .ok()
-                .contentType(MediaType.APPLICATION_JSON) // ✅ add this!
-                .body(json);
-    }
+//    @GetMapping("/courses/{id}/service")
+//    public ResponseEntity<String> getRating(@PathVariable Long id) {
+//        String json = externalApiService.getService(id);
+//        return ResponseEntity
+//                .ok()
+//                .contentType(MediaType.APPLICATION_JSON)
+//                .body(json);
+//    }
 
     @GetMapping("/discover")
     public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {

@@ -5,6 +5,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.example.springtaskdocker.CourseWrapper;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
+import org.example.springtaskdocker.FeignClients.ExternalXSDClient;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.context.annotation.Bean;
@@ -18,21 +20,16 @@ import java.util.List;
 @Service
 public class ExternalXSDService {
 
-    private final RestTemplate restTemplate;
+    @Autowired
+    private ExternalXSDClient externalXSDClient;
 
-    @Value("${external.xsd.service.api}")
-    private String serviceApiUrl;
+    public ExternalXSDService(ExternalXSDClient externalXSDClient) {
 
-    public ExternalXSDService(RestTemplateBuilder builder) {
-        this.restTemplate = builder.build();
-    }
-
-    public String getService() {
-        return restTemplate.getForObject(serviceApiUrl + "/xsdService/list",String.class);
+        this.externalXSDClient = externalXSDClient;
     }
 
     public List<CourseXSD> fetchCoursesFromMock() throws Exception {
-        String xml = getService();
+        String xml = externalXSDClient.fetchCoursesXml();
 
         JAXBContext jaxbContext = JAXBContext.newInstance(CourseWrapper.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();

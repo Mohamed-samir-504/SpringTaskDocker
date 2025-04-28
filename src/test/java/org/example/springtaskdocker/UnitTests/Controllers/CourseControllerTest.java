@@ -45,9 +45,6 @@ public class CourseControllerTest {
     private CourseMapper courseMapper;
 
     @MockitoBean
-    ExternalApiService externalApiService;
-
-    @MockitoBean
     ExternalXSDService externalXSDService;
 
 
