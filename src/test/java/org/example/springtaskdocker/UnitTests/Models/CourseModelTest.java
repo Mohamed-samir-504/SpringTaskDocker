@@ -7,9 +7,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CourseModelTest {
 
+    private Course course;
+
+    @BeforeEach
+    void setUp() {
+        course = new Course();
+    }
     @Test
     void gettersAndSetters_shouldWorkCorrectly() {
-        Course course = new Course();
 
         Long expectedId = 1L;
         String expectedName = "Java";
@@ -27,7 +32,6 @@ public class CourseModelTest {
 
     @Test
     void toString_shouldReturnExpectedString() {
-        Course course = new Course();
         course.setId(1L);
         course.setName("Java");
         course.setDescription("Intro to Java");
@@ -40,7 +44,6 @@ public class CourseModelTest {
 
     @Test
     void defaultConstructor_shouldInitializeEmptyObject() {
-        Course course = new Course();
         assertNull(course.getId());
         assertNull(course.getName());
         assertNull(course.getDescription());

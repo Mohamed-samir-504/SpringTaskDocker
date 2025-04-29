@@ -3,7 +3,7 @@ package org.example.springtaskdocker.Services;
 import generated.CourseXSD;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
-import org.example.springtaskdocker.DTO.CourseWrapper;
+import org.example.springtaskdocker.DTO.CourseXSDListWrapper;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.FeignClients.ExternalXSDClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +26,11 @@ public class ExternalXSDService {
 
     public List<CourseXSD> fetchCoursesFromMock() throws Exception {
         String xml = externalXSDClient.fetchCoursesXml();
-        JAXBContext jaxbContext = JAXBContext.newInstance(CourseWrapper.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(CourseXSDListWrapper.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
         StringReader reader = new StringReader(xml);
-        CourseWrapper wrapper = (CourseWrapper) unmarshaller.unmarshal(new StreamSource(reader));
+        CourseXSDListWrapper wrapper = (CourseXSDListWrapper) unmarshaller.unmarshal(new StreamSource(reader));
 
         return wrapper.getCourses();
     }

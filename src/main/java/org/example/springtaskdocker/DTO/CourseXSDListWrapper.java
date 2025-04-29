@@ -12,7 +12,7 @@ import java.util.List;
 
 @XmlRootElement(name = "courses", namespace = "http://example.org/course")
 @XmlAccessorType(XmlAccessType.FIELD)
-public class CourseWrapper {
+public class CourseXSDListWrapper {
 
     @XmlElement(name = "course", namespace = "http://example.org/course")
     private List<CourseXSD> courses = new ArrayList<>();
