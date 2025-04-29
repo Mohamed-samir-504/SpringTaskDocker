@@ -1,7 +1,5 @@
 package org.example.springtaskdocker.Controllers;
 
-
-import com.generatedSources.CourseXSD;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mappers.CourseMapper;
@@ -15,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
+import generated.CourseXSD;
 
 import java.util.List;
 import java.util.Optional;

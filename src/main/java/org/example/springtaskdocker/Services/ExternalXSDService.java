@@ -1,6 +1,6 @@
 package org.example.springtaskdocker.Services;
 
-import com.generatedSources.CourseXSD;
+import generated.CourseXSD;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.example.springtaskdocker.CourseWrapper;

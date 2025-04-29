@@ -192,9 +192,9 @@
                     <sources>
                         <source>${basedir}/src/main/resources/course.xsd</source>
                     </sources>
-                    <outputDirectory>src/generated/java</outputDirectory> <!-- ✅ New safe output directory -->
-                    <packageName>com.generatedSources</packageName>
-                    <clearOutputDir>true</clearOutputDir>
+                    <outputDirectory>${basedir}/src/main/java</outputDirectory>
+                    <packageName>generated</packageName>
+                    <clearOutputDir>false</clearOutputDir>
                 </configuration>
             </plugin>
         </plugins>
