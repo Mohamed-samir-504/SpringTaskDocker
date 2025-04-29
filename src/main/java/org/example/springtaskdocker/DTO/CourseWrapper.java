@@ -1,4 +1,4 @@
-package org.example.springtaskdocker;
+package org.example.springtaskdocker.DTO;
 
 import generated.CourseXSD;
 import jakarta.xml.bind.annotation.XmlAccessType;

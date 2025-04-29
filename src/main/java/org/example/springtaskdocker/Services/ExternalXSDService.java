@@ -3,7 +3,7 @@ package org.example.springtaskdocker.Services;
 import generated.CourseXSD;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
-import org.example.springtaskdocker.CourseWrapper;
+import org.example.springtaskdocker.DTO.CourseWrapper;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.FeignClients.ExternalXSDClient;
 import org.springframework.beans.factory.annotation.Autowired;
