@@ -4,6 +4,7 @@ import generated.AdvancedCourseXSD;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mappers.CourseMapper;
+import org.example.springtaskdocker.Mappers.CourseXSDMapper;
 import org.example.springtaskdocker.Models.Course;
 import org.example.springtaskdocker.Services.CourseService;
 import org.example.springtaskdocker.Services.ExternalXSDService;
@@ -31,6 +32,9 @@ public class CourseController {
 
     @Autowired
     CourseMapper courseMapper;
+
+    @Autowired
+    CourseXSDMapper courseXSDMapper;
 
     public CourseController(CourseService courseService, ExternalXSDService externalXSDService) {
         this.courseService = courseService;
@@ -85,7 +89,6 @@ public class CourseController {
     // Handles the form submission using model attribute
     @PostMapping("/add-submit")
     public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO course) {
-        //System.out.println(course);
         courseService.addCourse(courseMapper.toEntity(course));
         return ResponseEntity.ok("Course added successfully.");
     }
@@ -112,11 +115,10 @@ public class CourseController {
 
     @GetMapping("/discover")
     public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
-        List<AdvancedCourseXSD> coursesFromMock = externalXSDService.fetchCoursesFromMock();
-        List<CourseXSDDTO> courseDTOs = coursesFromMock.stream()
-                .map(externalXSDService::mapToDto)
-                .collect(Collectors.toList());
-        return ResponseEntity.ok(courseDTOs);
+
+        List<AdvancedCourseXSD> advCourses = externalXSDService.getDiscoveredCourses();
+        return ResponseEntity.ok(courseXSDMapper.toDtoList(advCourses));
+
     }
 
 }
