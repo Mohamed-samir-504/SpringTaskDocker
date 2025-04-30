@@ -30,10 +30,9 @@ public class CourseControllerWireMockTest {
 
     @BeforeAll
     static void setup() {
-        wireMockServer = new WireMockServer(8089);
+        wireMockServer = new WireMockServer(8088);
         wireMockServer.start();
-
-        configureFor("localhost", 8089);
+        configureFor("localhost", 8088);
     }
 
     @AfterAll
@@ -66,7 +65,8 @@ public class CourseControllerWireMockTest {
                     """)));
 
 
-        mockMvc.perform(get("/discover").with(httpBasic("admin", "admin123")))
+        mockMvc.perform(get("/coursesXSD").with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2)) // 2 courses returned

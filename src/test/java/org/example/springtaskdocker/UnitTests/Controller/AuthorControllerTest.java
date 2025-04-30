@@ -39,6 +39,7 @@ public class AuthorControllerTest {
 
         mockMvc.perform(get("/author")
                         .with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true")
                         .param("email", author.getEmail()))
 
                 .andExpect(status().isOk())

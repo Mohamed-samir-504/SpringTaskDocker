@@ -59,8 +59,8 @@ public class CourseControllerTest {
         when(courseService.getCourseByName("Spring")).thenReturn(Optional.of(course));
         when(courseMapper.toDto(course)).thenReturn(courseDTO);
 
-        mockMvc.perform(get("/courses")
-                        .param("name", "Spring"))
+        mockMvc.perform(get("/courses").with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true").param("name", "Spring"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Spring"))
                 .andExpect(jsonPath("$.description").value("Spring course"));
@@ -81,7 +81,8 @@ public class CourseControllerTest {
         when(courseService.getRecommendedCourses()).thenReturn(courseList);
         when(courseMapper.toDtoList(courseList)).thenReturn(courseDTOList);
 
-        mockMvc.perform(get("/courses/all"))
+        mockMvc.perform(get("/courses/all").with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].name").value("Java"))
@@ -104,8 +105,8 @@ public class CourseControllerTest {
 
         when(courseService.getCoursesPaginated(pageable)).thenReturn(mockPage);
 
-        mockMvc.perform(get("/courses/pages")
-                        .param("page", "0").param("size", "3"))
+        mockMvc.perform(get("/courses/pages").with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true").param("page", "0").param("size", "3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pageable.pageSize").value(3))
                 .andExpect(jsonPath("$.pageable.pageNumber").value(0))
