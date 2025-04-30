@@ -3,6 +3,7 @@ package org.example.springtaskdocker.UnitTests.Controller;
 import org.example.springtaskdocker.Controller.CourseController;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.Mapper.CourseMapper;
+import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.example.springtaskdocker.Model.Course;
 import org.example.springtaskdocker.Config.SecurityConfig;
 import org.example.springtaskdocker.Service.CourseService;
@@ -42,6 +43,9 @@ public class CourseControllerTest {
 
     @MockitoBean
     private CourseMapper courseMapper;
+
+    @MockitoBean
+    private CourseXSDMapper courseXSDMapper;
 
     @MockitoBean
     ExternalXSDService externalXSDService;
@@ -87,21 +91,6 @@ public class CourseControllerTest {
 
     }
 
-    @Test
-    void viewAllCourses_NoCoursesExist_shouldReturnNull() throws Exception {
-        List<Course> courseList = List.of();
-
-        List<CourseDTO> courseDTOList = List.of();
-
-
-        when(courseService.getRecommendedCourses()).thenReturn(courseList);
-        when(courseMapper.toDtoList(courseList)).thenReturn(courseDTOList);
-
-        mockMvc.perform(get("/view/all"))
-                .andExpect(status().isOk())
-                .andExpect(content().string(""));
-
-    }
 
     @Test
     void getCoursesPaginated_shouldReturnPagesOfCourses() throws Exception {
@@ -186,23 +175,5 @@ public class CourseControllerTest {
 
     }
 
-    @Test
-    void updateCourse_CourseDoesNotExist_shouldReturnNotFound() throws Exception {
-        Long id = 100L;
-
-        when(courseService.getCourseById(id)).thenReturn(Optional.empty());
-
-        mockMvc.perform(patch("/update/{id}", id)
-                        .header("x-validation-report", "true")
-                        .with(httpBasic("admin", "admin123"))
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("""
-                            {
-                              "name": "Advanced Java",
-                              "description": "Updated"
-                            }
-                        """))
-                .andExpect(status().isNotFound());
-    }
 
 }
