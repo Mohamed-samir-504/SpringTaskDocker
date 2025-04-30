@@ -24,11 +24,10 @@ public class SecurityConfig {
         http
                 .addFilterBefore(headerValidationFilter, UsernamePasswordAuthenticationFilter.class)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/add-submit").hasRole("ADMIN")
-                        .requestMatchers("/update/").hasAnyRole("ADMIN")
-                        .requestMatchers("/delete/").hasAnyRole("ADMIN")
-                        .requestMatchers("/h2-console/**").hasAnyRole("ADMIN")
-                        .requestMatchers("/swagger-ui/**","/view/**","/").permitAll()
+                        .requestMatchers("/new-course").hasRole("ADMIN")
+                        .requestMatchers("/courses/").hasAnyRole("ADMIN")
+                        .requestMatchers("/coursesXSD").hasRole("ADMIN")
+                        .requestMatchers("/swagger-ui/**","/").permitAll()
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)

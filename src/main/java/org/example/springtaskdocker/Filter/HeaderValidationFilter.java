@@ -21,14 +21,15 @@ public class HeaderValidationFilter extends OncePerRequestFilter {
         String headerValue = request.getHeader("x-validation-report");
         String path = request.getRequestURI();
 
-        if (path.startsWith("/delete") || path.startsWith("/update")) {
+        if (!path.startsWith("/form") && !path.startsWith("/Add") && !path.startsWith("/new-course")) {
             if (!"true".equalsIgnoreCase(headerValue)) {
                 response.setStatus(HttpServletResponse.SC_FORBIDDEN);
                 response.getWriter().write("Missing or invalid x-validation-report header");
                 return;
             }
-
         }
+
+
         filterChain.doFilter(request, response);
     }
 }

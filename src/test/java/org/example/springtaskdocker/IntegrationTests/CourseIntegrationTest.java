@@ -30,10 +30,6 @@ class CourseIntegrationTest {
     @Autowired
     private CourseRepository courseRepository;
 
-//    @BeforeEach
-//    void clearDb() {
-//       courseRepository.deleteAll();
-//    }
 
     @Test
     void shouldReturnCourseDTO_whenCourseExistsByName() throws Exception {
@@ -43,7 +39,7 @@ class CourseIntegrationTest {
         course.setDescription("Testing course");
         courseService.addCourse(course);
 
-        mockMvc.perform(get("/view")
+        mockMvc.perform(get("/courses")
                         .param("name", "Testing"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Testing"))

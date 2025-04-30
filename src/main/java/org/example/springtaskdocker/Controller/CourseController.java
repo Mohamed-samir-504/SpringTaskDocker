@@ -41,7 +41,7 @@ public class CourseController {
 
     //shows one course by its name
     //Using parameter request
-    @GetMapping("/view")
+    @GetMapping("/courses")
     public ResponseEntity<CourseDTO> viewCourse(@RequestParam String name) {
 
         return courseService.getCourseByName(name)
@@ -52,7 +52,7 @@ public class CourseController {
     }
 
     //Shows all courses
-    @GetMapping("/view/all")
+    @GetMapping("/courses/all")
     public ResponseEntity<List<CourseDTO>> viewAllCourses() {
         List<Course> courses = courseService.getRecommendedCourses();
         return ResponseEntity.ok(courseMapper.toDtoList(courses));
@@ -60,7 +60,7 @@ public class CourseController {
     }
 
     //show paginated response
-    @GetMapping("/view/pages")
+    @GetMapping("/courses/pages")
     public ResponseEntity<Page<Course>> getCourses(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size) {
@@ -72,28 +72,28 @@ public class CourseController {
 
 
     // Shows the form to add a course
-    @GetMapping("/add")
+    @GetMapping("/form")
     public RedirectView showAddForm() {
         return new RedirectView("/Add.html");
     }
 
 
     // Handles the form submission using model attribute
-    @PostMapping("/add-submit")
+    @PostMapping("/new-course")
     public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO course) {
         courseService.addCourse(courseMapper.toEntity(course));
         return ResponseEntity.ok("Course added successfully.");
     }
 
     //using request body and path variable
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/courses/{id}")
     public ResponseEntity<String> updateCourse(@RequestBody Course course, @PathVariable Long id) {
         Optional<Course> originalCourse = courseService.getCourseById(id);
         courseService.updateCourse(originalCourse.get(),course);
         return ResponseEntity.ok("Course updated successfully.");
     }
 
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/courses/{id}")
     public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
         return ResponseEntity.ok("Course deleted successfully");
@@ -101,7 +101,7 @@ public class CourseController {
 
 
 
-    @GetMapping("/discover")
+    @GetMapping("/coursesXSD")
     public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
         List<AdvancedCourseXSD> advCourses = externalXSDService.getDiscoveredCourses();
         return ResponseEntity.ok(courseXSDMapper.toDtoList(advCourses));

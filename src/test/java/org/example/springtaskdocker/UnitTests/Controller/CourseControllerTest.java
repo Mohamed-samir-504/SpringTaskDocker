@@ -59,7 +59,7 @@ public class CourseControllerTest {
         when(courseService.getCourseByName("Spring")).thenReturn(Optional.of(course));
         when(courseMapper.toDto(course)).thenReturn(courseDTO);
 
-        mockMvc.perform(get("/view")
+        mockMvc.perform(get("/courses")
                         .param("name", "Spring"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Spring"))
@@ -81,7 +81,7 @@ public class CourseControllerTest {
         when(courseService.getRecommendedCourses()).thenReturn(courseList);
         when(courseMapper.toDtoList(courseList)).thenReturn(courseDTOList);
 
-        mockMvc.perform(get("/view/all"))
+        mockMvc.perform(get("/courses/all"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2))
                 .andExpect(jsonPath("$[0].name").value("Java"))
@@ -104,7 +104,7 @@ public class CourseControllerTest {
 
         when(courseService.getCoursesPaginated(pageable)).thenReturn(mockPage);
 
-        mockMvc.perform(get("/view/pages")
+        mockMvc.perform(get("/courses/pages")
                         .param("page", "0").param("size", "3"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.pageable.pageSize").value(3))
@@ -117,7 +117,7 @@ public class CourseControllerTest {
 
     @Test
     void showAddForm_shouldRedirectToAddHtml() throws Exception {
-        mockMvc.perform(get("/add").with(httpBasic("admin", "admin123")))
+        mockMvc.perform(get("/form").with(httpBasic("admin", "admin123")))
                 .andExpect(status().is3xxRedirection()) // redirect
                 .andExpect(redirectedUrl("/Add.html")); // verify the target
     }
@@ -129,7 +129,7 @@ public class CourseControllerTest {
 
         when(courseMapper.toEntity(any(CourseDTO.class))).thenReturn(course);
 
-        mockMvc.perform(post("/add-submit").with(httpBasic("admin", "admin123"))
+        mockMvc.perform(post("/new-course").with(httpBasic("admin", "admin123"))
                         .param("name", "Java")
                         .param("description", "Java Course"))
                 .andExpect(status().isOk())
@@ -142,7 +142,7 @@ public class CourseControllerTest {
     void deleteCourse_shouldReturnSuccessMessage() throws Exception {
         Long courseId = 1L;
 
-        mockMvc.perform(delete("/delete/{id}", courseId)
+        mockMvc.perform(delete("/courses/{id}", courseId)
                         .header("x-validation-report", "true")
                         .with(httpBasic("admin", "admin123")))
                         .andExpect(status().isOk())
@@ -165,7 +165,7 @@ public class CourseControllerTest {
 
         when(courseService.getCourseById(originalCourse.getId())).thenReturn(Optional.of(originalCourse));
 
-        mockMvc.perform(patch("/update/{id}", originalCourse.getId())
+        mockMvc.perform(patch("/courses/{id}", originalCourse.getId())
                         .header("x-validation-report", "true")
                         .with(httpBasic("admin", "admin123"))
                         .contentType(MediaType.APPLICATION_JSON)

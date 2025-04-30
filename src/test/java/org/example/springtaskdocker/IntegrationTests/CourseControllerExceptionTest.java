@@ -17,7 +17,7 @@ public class CourseControllerExceptionTest {
 
     @Test
     void shouldReturn400WhenCourseNameIsBlank() throws Exception {
-        mockMvc.perform(get("/view")
+        mockMvc.perform(get("/courses")
                         .param("name", "  "))
                 .andExpect(status().isBadRequest())
                 .andExpect(content().string("Course name must not be blank"));
@@ -26,7 +26,7 @@ public class CourseControllerExceptionTest {
     @Test
     void shouldReturn404WhenCourseNotFound() throws Exception {
         String name = "A course that does not exist";
-        mockMvc.perform(get("/view")
+        mockMvc.perform(get("/courses")
                         .param("name", name))
                 .andExpect(status().isNotFound())
                 .andExpect(content().string("Course with name " + name + " not found"));

@@ -18,7 +18,7 @@ VALUES
     (3, 'Data Structures', 'Study of arrays, linked lists, trees', 3),
     (4, 'Python', 'Python', 4);
 
-
+ALTER TABLE course AUTO_INCREMENT = 5;
 
 INSERT IGNORE INTO rating (rating_id, number, course_id)
 VALUES
