@@ -1,5 +1,6 @@
 package org.example.springtaskdocker.Controllers;
 
+import generated.AdvancedCourseXSD;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mappers.CourseMapper;
@@ -108,18 +109,10 @@ public class CourseController {
     }
 
 
-//    @GetMapping("/courses/{id}/service")
-//    public ResponseEntity<String> getRating(@PathVariable Long id) {
-//        String json = externalApiService.getService(id);
-//        return ResponseEntity
-//                .ok()
-//                .contentType(MediaType.APPLICATION_JSON)
-//                .body(json);
-//    }
 
     @GetMapping("/discover")
     public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
-        List<CourseXSD> coursesFromMock = externalXSDService.fetchCoursesFromMock();
+        List<AdvancedCourseXSD> coursesFromMock = externalXSDService.fetchCoursesFromMock();
         List<CourseXSDDTO> courseDTOs = coursesFromMock.stream()
                 .map(externalXSDService::mapToDto)
                 .collect(Collectors.toList());

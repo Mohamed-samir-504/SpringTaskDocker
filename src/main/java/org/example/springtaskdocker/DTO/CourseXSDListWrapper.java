@@ -1,11 +1,8 @@
 package org.example.springtaskdocker.DTO;
 
 import generated.CourseXSD;
-import jakarta.xml.bind.annotation.XmlAccessType;
-import jakarta.xml.bind.annotation.XmlAccessorType;
-import jakarta.xml.bind.annotation.XmlElement;
-import jakarta.xml.bind.annotation.XmlRootElement;
-
+import generated.AdvancedCourseXSD;
+import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,14 +11,17 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 public class CourseXSDListWrapper {
 
-    @XmlElement(name = "course", namespace = "http://example.org/course")
-    private List<CourseXSD> courses = new ArrayList<>();
+    @XmlElements({
+            @XmlElement(name = "course", type = AdvancedCourseXSD.class, namespace = "http://example.org/course"),
+            @XmlElement(name = "advancedCourse", type = AdvancedCourseXSD.class, namespace = "http://example.org/course")
+    })
+    private List<AdvancedCourseXSD> courses = new ArrayList<>();
 
-    public List<CourseXSD> getCourses() {
+    public List<AdvancedCourseXSD> getCourses() {
         return courses;
     }
 
-    public void setCourses(List<CourseXSD> courses) {
+    public void setCourses(List<AdvancedCourseXSD> courses) {
         this.courses = courses;
     }
 }
