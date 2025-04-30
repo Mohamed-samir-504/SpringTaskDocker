@@ -1,7 +1,7 @@
 package org.example.springtaskdocker.IntegrationTests;
 
-import org.example.springtaskdocker.Repositories.CourseRepository;
-import org.example.springtaskdocker.Services.CourseService;
+import org.example.springtaskdocker.Repository.CourseRepository;
+import org.example.springtaskdocker.Service.CourseService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
@@ -12,7 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import org.example.springtaskdocker.Models.Course;
+import org.example.springtaskdocker.Model.Course;
 
 
 import java.util.Optional;
