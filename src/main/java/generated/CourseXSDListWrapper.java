@@ -1,6 +1,5 @@
-package org.example.springtaskdocker.Config;
+package generated;
 
-import generated.AdvancedCourseXSD;
 import jakarta.xml.bind.annotation.*;
 
 import java.util.ArrayList;

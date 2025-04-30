@@ -4,7 +4,7 @@ import generated.AdvancedCourseXSD;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
-import org.example.springtaskdocker.Config.CourseXSDListWrapper;
+import generated.CourseXSDListWrapper;
 import org.example.springtaskdocker.Client.ExternalXSDClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
