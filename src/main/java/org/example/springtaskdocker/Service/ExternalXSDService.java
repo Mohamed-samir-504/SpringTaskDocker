@@ -6,7 +6,8 @@ import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import generated.CourseXSDListWrapper;
 import org.example.springtaskdocker.Client.ExternalXSDClient;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.example.springtaskdocker.DTO.CourseXSDDTO;
+import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.springframework.stereotype.Service;
 
 import javax.xml.transform.stream.StreamSource;
@@ -16,12 +17,15 @@ import java.util.List;
 @Service
 public class ExternalXSDService {
 
-    @Autowired
+
     private ExternalXSDClient externalXSDClient;
 
-    public ExternalXSDService(ExternalXSDClient externalXSDClient) {
+    private CourseXSDMapper courseXSDMapper;
+
+    public ExternalXSDService(ExternalXSDClient externalXSDClient, CourseXSDMapper courseXSDMapper) {
 
         this.externalXSDClient = externalXSDClient;
+        this.courseXSDMapper = courseXSDMapper;
     }
 
     public List<AdvancedCourseXSD> fetchAndParse() throws Exception {
@@ -35,13 +39,13 @@ public class ExternalXSDService {
         return wrapper.getCourses();
     }
 
-    public List<AdvancedCourseXSD> getDiscoveredCourses() throws Exception {
+    public List<CourseXSDDTO> getDiscoveredCourses() throws Exception {
         List<AdvancedCourseXSD> advCourses = fetchAndParse();
 
         if (advCourses == null || advCourses.isEmpty()) {
             throw new EntityNotFoundException("Courses not found");
         }
 
-        return advCourses;
+        return courseXSDMapper.toDtoList(advCourses);
     }
 }

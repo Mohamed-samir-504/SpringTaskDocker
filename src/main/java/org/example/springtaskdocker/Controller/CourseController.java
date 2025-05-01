@@ -1,14 +1,11 @@
 package org.example.springtaskdocker.Controller;
 
-import generated.AdvancedCourseXSD;
+
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
-import org.example.springtaskdocker.Mapper.CourseMapper;
-import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.example.springtaskdocker.Model.Course;
 import org.example.springtaskdocker.Service.CourseService;
 import org.example.springtaskdocker.Service.ExternalXSDService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -17,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class CourseController {
@@ -26,15 +22,10 @@ public class CourseController {
     CourseService courseService;
     ExternalXSDService externalXSDService;
 
-    CourseMapper courseMapper;
-    CourseXSDMapper courseXSDMapper;
 
-    public CourseController(CourseService courseService, ExternalXSDService externalXSDService,
-                            CourseMapper courseMapper, CourseXSDMapper courseXSDMapper) {
+    public CourseController(CourseService courseService, ExternalXSDService externalXSDService) {
         this.courseService = courseService;
         this.externalXSDService = externalXSDService;
-        this.courseMapper = courseMapper;
-        this.courseXSDMapper = courseXSDMapper;
 
     }
 
@@ -44,18 +35,15 @@ public class CourseController {
     @GetMapping("/courses")
     public ResponseEntity<CourseDTO> viewCourse(@RequestParam String name) {
 
-        return courseService.getCourseByName(name)
-                .map(courseMapper::toDto)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(courseService.getCourseByName(name));
+
 
     }
 
     //Shows all courses
     @GetMapping("/courses/all")
     public ResponseEntity<List<CourseDTO>> viewAllCourses() {
-        List<Course> courses = courseService.getRecommendedCourses();
-        return ResponseEntity.ok(courseMapper.toDtoList(courses));
+        return ResponseEntity.ok(courseService.getRecommendedCourses());
 
     }
 
@@ -81,15 +69,15 @@ public class CourseController {
     // Handles the form submission using model attribute
     @PostMapping("/new-course")
     public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO course) {
-        courseService.addCourse(courseMapper.toEntity(course));
+        courseService.addCourse(course);
         return ResponseEntity.ok("Course added successfully.");
     }
 
     //using request body and path variable
     @PatchMapping("/courses/{id}")
     public ResponseEntity<String> updateCourse(@RequestBody Course course, @PathVariable Long id) {
-        Optional<Course> originalCourse = courseService.getCourseById(id);
-        courseService.updateCourse(originalCourse.get(),course);
+        Course originalCourse = courseService.getCourseById(id);
+        courseService.updateCourse(originalCourse,course);
         return ResponseEntity.ok("Course updated successfully.");
     }
 
@@ -103,7 +91,6 @@ public class CourseController {
 
     @GetMapping("/coursesXSD")
     public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
-        List<AdvancedCourseXSD> advCourses = externalXSDService.getDiscoveredCourses();
-        return ResponseEntity.ok(courseXSDMapper.toDtoList(advCourses));
+        return ResponseEntity.ok(externalXSDService.getDiscoveredCourses());
     }
 }

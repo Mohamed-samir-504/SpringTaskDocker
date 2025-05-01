@@ -2,55 +2,66 @@ package org.example.springtaskdocker.Service;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Mapper.CourseMapper;
 import org.example.springtaskdocker.Repository.CourseRepository;
 import org.example.springtaskdocker.Model.Course;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 public class CourseService {
 
-    @Autowired
-    private CourseRepository courseRepository;
 
+    private CourseRepository courseRepository;
+    private CourseMapper courseMapper;
+
+    public CourseService(CourseRepository courseRepository, CourseMapper courseMapper) {
+        this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
+    }
 
     public Page<Course> getCoursesPaginated(Pageable pageable) {
 
         return courseRepository.findAll(pageable);
     }
-    public List<Course> getRecommendedCourses(){
+
+    public List<CourseDTO> getRecommendedCourses(){
         List<Course> courses = courseRepository.findAll();
 
         if (courses.isEmpty()) {
             throw new EntityNotFoundException("Courses not found");
         }
-        return courses;
+        return courseMapper.toDtoList(courses);
     }
 
-    public Optional<Course> getCourseByName(String name){
+    public CourseDTO getCourseByName(String name){
         if (name == null || name.isBlank()) {
             throw new IllegalArgumentException("Course name must not be blank");
         }
-        return Optional.ofNullable(courseRepository.findFirstByName(name)
-                .orElseThrow(() -> new EntityNotFoundException("Course with name " + name + " not found")));
+        Course course = courseRepository.findFirstByName(name);
+        if (course == null) {
+            throw new EntityNotFoundException("Course with name " + name + " not found");
+        }
+        return courseMapper.toDto(course);
 
     }
-    public Optional<Course> getCourseById(Long id){
+    public Course getCourseById(Long id){
         if (id == null) {
             throw new IllegalArgumentException("Course id must not be blank");
         }
-        return Optional.ofNullable(courseRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Course with id " + id + " not found")));
+        return courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Course with id " + id + " not found"));
 
     }
 
-    public void addCourse (Course course) {
-        courseRepository.save(course);
+    public void addCourse (CourseDTO course) {
+
+        courseRepository.save(courseMapper.toEntity(course));
     }
 
     public void updateCourse (Course oldCourse,Course newCourse) {
