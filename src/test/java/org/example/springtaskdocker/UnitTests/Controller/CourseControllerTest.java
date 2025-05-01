@@ -21,6 +21,7 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
@@ -56,8 +57,8 @@ public class CourseControllerTest {
         Course course = new Course(1L, "Spring", "Spring course");
         CourseDTO courseDTO = new CourseDTO("Spring","Spring course");
 
-        when(courseService.getCourseByName("Spring")).thenReturn(Optional.of(course));
-        when(courseMapper.toDto(course)).thenReturn(courseDTO);
+        when(courseService.getCourseByName("Spring")).thenReturn(courseDTO);
+
 
         mockMvc.perform(get("/courses").with(httpBasic("admin", "admin123"))
                         .header("x-validation-report", "true").param("name", "Spring"))
@@ -78,8 +79,8 @@ public class CourseControllerTest {
                 new CourseDTO("Spring", "Spring course")
         );
 
-        when(courseService.getRecommendedCourses()).thenReturn(courseList);
-        when(courseMapper.toDtoList(courseList)).thenReturn(courseDTOList);
+        when(courseService.getRecommendedCourses()).thenReturn(courseDTOList);
+
 
         mockMvc.perform(get("/courses/all").with(httpBasic("admin", "admin123"))
                         .header("x-validation-report", "true"))
@@ -136,7 +137,7 @@ public class CourseControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().string("Course added successfully."));
 
-        verify(courseService).addCourse(course);
+        verify(courseService).addCourse(any(CourseDTO.class));
     }
 
     @Test
@@ -164,7 +165,7 @@ public class CourseControllerTest {
             }
             """, updatedCourse.getName(), updatedCourse.getDescription());
 
-        when(courseService.getCourseById(originalCourse.getId())).thenReturn(Optional.of(originalCourse));
+        when(courseService.getCourseById(originalCourse.getId())).thenReturn(originalCourse);
 
         mockMvc.perform(patch("/courses/{id}", originalCourse.getId())
                         .header("x-validation-report", "true")

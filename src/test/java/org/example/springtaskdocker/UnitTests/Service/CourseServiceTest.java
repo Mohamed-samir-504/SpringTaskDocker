@@ -1,6 +1,8 @@
 package org.example.springtaskdocker.UnitTests.Service;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Mapper.CourseMapper;
 import org.example.springtaskdocker.Model.Course;
 import org.example.springtaskdocker.Repository.CourseRepository;
 import org.example.springtaskdocker.Service.CourseService;
@@ -27,8 +29,13 @@ public class CourseServiceTest {
     @Mock
     private CourseRepository courseRepository;
 
+    @Mock
+    private CourseMapper courseMapper;
+
     @InjectMocks
     private CourseService courseService;
+
+
 
     @Test
     void getCoursesPaginated_shouldReturnPageOfCourses() {
@@ -57,9 +64,15 @@ public class CourseServiceTest {
                 new Course(2L, "Spring", "Spring course")
         );
 
-        when(courseRepository.findAll()).thenReturn(mockCourses);
+        List<CourseDTO> mockDTOs = List.of(
+                new CourseDTO( "Java", "Intro to Java"),
+                new CourseDTO( "Spring", "Spring course")
+        );
 
-        List<Course> result = courseService.getRecommendedCourses();
+        when(courseRepository.findAll()).thenReturn(mockCourses);
+        when(courseMapper.toDtoList(mockCourses)).thenReturn(mockDTOs);
+
+        List<CourseDTO> result = courseService.getRecommendedCourses();
 
         assertEquals(2, result.size());
         assertEquals("Java", result.get(0).getName());
@@ -70,13 +83,15 @@ public class CourseServiceTest {
     @Test
     void getCourseByName_courseExists_shouldReturnCorrectCourse() {
         Course mockCourse = new Course(1L, "Java", "Java course");
-        when(courseRepository.findFirstByName(mockCourse.getName())).thenReturn(Optional.of(mockCourse));
+        CourseDTO mockDTO = new CourseDTO( "Java", "Java course");
 
-        Optional<Course> result = courseService.getCourseByName("Java");
+        when(courseRepository.findFirstByName(mockCourse.getName())).thenReturn(mockCourse);
+        when(courseMapper.toDto(mockCourse)).thenReturn(mockDTO);
 
-        assertEquals(1, result.get().getId());
-        assertEquals("Java", result.get().getName());
-        assertEquals("Java course", result.get().getDescription());
+        CourseDTO result = courseService.getCourseByName("Java");
+
+        assertEquals("Java", result.getName());
+        assertEquals("Java course", result.getDescription());
     }
 
     @Test
@@ -88,7 +103,7 @@ public class CourseServiceTest {
 
     @Test
     void getCourseByName_CourseDoesNotExist_shouldThrowEntityNotFoundException() {
-        when(courseRepository.findFirstByName("C++")).thenReturn(Optional.empty());
+        when(courseRepository.findFirstByName("C++")).thenReturn(null);
 
         assertThrows(EntityNotFoundException.class, () ->
                 courseService.getCourseByName("C++")
@@ -101,8 +116,8 @@ public class CourseServiceTest {
     void getCourseById_courseExists_shouldReturnCorrectCourse() {
         Course mockCourse = new Course(1L, "Java", "Java course");
         when(courseRepository.findById(mockCourse.getId())).thenReturn(Optional.of(mockCourse));
-        Optional<Course> result = courseService.getCourseById(1L);
-        assertEquals(1, result.get().getId());
+        Course result = courseService.getCourseById(1L);
+        assertEquals(1, result.getId());
     }
 
     @Test
@@ -125,7 +140,9 @@ public class CourseServiceTest {
     void addCourse_shouldCallSaveMethod() {
 
         Course mockCourse = new Course(1L, "Java", "Java course");
-        courseService.addCourse(mockCourse);
+        CourseDTO mockDTO = new CourseDTO( "Java", "Java course");
+        when(courseMapper.toEntity(mockDTO)).thenReturn(mockCourse);
+        courseService.addCourse(mockDTO);
         verify(courseRepository).save(mockCourse);
     }
 

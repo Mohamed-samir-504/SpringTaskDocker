@@ -1,5 +1,8 @@
 package org.example.springtaskdocker.IntegrationTests;
 
+import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Mapper.CourseMapper;
+import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.example.springtaskdocker.Repository.CourseRepository;
 import org.example.springtaskdocker.Service.CourseService;
 import org.junit.jupiter.api.MethodOrderer;
@@ -31,6 +34,8 @@ class CourseIntegrationTest {
     private CourseService courseService;
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private CourseMapper courseMapper;
 
 
     @Test
@@ -39,7 +44,7 @@ class CourseIntegrationTest {
         Course course = new Course();
         course.setName("Testing");
         course.setDescription("Testing course");
-        courseService.addCourse(course);
+        courseService.addCourse(courseMapper.toDto(course));
 
         mockMvc.perform(get("/courses").with(httpBasic("admin", "admin123"))
                         .header("x-validation-report", "true")
@@ -48,8 +53,6 @@ class CourseIntegrationTest {
                 .andExpect(jsonPath("$.name").value("Testing"))
                 .andExpect(jsonPath("$.description").value("Testing course"));
 
-        Optional<Course> addedCourse = courseService.getCourseByName("Testing");
-
-        courseService.deleteCourse(addedCourse.get().getId());
+        courseService.deleteCourseByName("Testing");
     }
 }

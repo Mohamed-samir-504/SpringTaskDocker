@@ -12,5 +12,7 @@ import java.util.Optional;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     public Course findFirstByName(String name);
+    boolean existsByName(String name);
+    void deleteByName(String name);
     Page<Course> findAll(Pageable pageable);
 }

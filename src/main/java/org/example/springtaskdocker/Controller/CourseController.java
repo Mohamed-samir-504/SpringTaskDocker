@@ -68,8 +68,8 @@ public class CourseController {
 
     // Handles the form submission using model attribute
     @PostMapping("/new-course")
-    public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO course) {
-        courseService.addCourse(course);
+    public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO courseDTO) {
+        courseService.addCourse(courseDTO);
         return ResponseEntity.ok("Course added successfully.");
     }
 

@@ -2,6 +2,7 @@ package org.example.springtaskdocker.Service;
 
 
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.example.springtaskdocker.DTO.CourseDTO;
 import org.example.springtaskdocker.Mapper.CourseMapper;
 import org.example.springtaskdocker.Repository.CourseRepository;
@@ -59,9 +60,9 @@ public class CourseService {
 
     }
 
-    public void addCourse (CourseDTO course) {
+    public void addCourse (CourseDTO courseDTO) {
 
-        courseRepository.save(courseMapper.toEntity(course));
+        courseRepository.save(courseMapper.toEntity(courseDTO));
     }
 
     public void updateCourse (Course oldCourse,Course newCourse) {
@@ -86,6 +87,16 @@ public class CourseService {
         }
         courseRepository.deleteById(id);
     }
+
+    @Transactional
+    public void deleteCourseByName(String name) {
+        if (!courseRepository.existsByName(name)) {
+            throw new EntityNotFoundException("Course with name " + name + " does not exist");
+        }
+        courseRepository.deleteByName(name);
+    }
+
+
 
 
 
