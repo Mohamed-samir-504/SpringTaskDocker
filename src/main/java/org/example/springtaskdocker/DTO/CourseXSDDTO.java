@@ -3,7 +3,6 @@ package org.example.springtaskdocker.DTO;
 public class CourseXSDDTO {
     private String name;
     private String description;
-    private String prerequisites;
 
 
     private int credit;
@@ -18,14 +17,6 @@ public class CourseXSDDTO {
 
     public void setCredit(int credit) {
         this.credit = credit;
-    }
-
-    public void setPrerequisites(String prerequisites) {
-        this.prerequisites = prerequisites;
-    }
-
-    public String getPrerequisites() {
-        return prerequisites;
     }
 
     public String getName() {
