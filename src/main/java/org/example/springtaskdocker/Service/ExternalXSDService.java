@@ -1,10 +1,9 @@
 package org.example.springtaskdocker.Service;
 
-import generated.AdvancedCourseXSD;
+import generated.CoursesXSD;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
-import generated.CourseXSDListWrapper;
 import org.example.springtaskdocker.Client.ExternalXSDClient;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mapper.CourseXSDMapper;
@@ -28,19 +27,19 @@ public class ExternalXSDService {
         this.courseXSDMapper = courseXSDMapper;
     }
 
-    public List<AdvancedCourseXSD> fetchAndParse() throws Exception {
+    public List<CoursesXSD.CourseXSD> fetchAndParse() throws Exception {
         String xml = externalXSDClient.fetchCoursesXml();
-        JAXBContext jaxbContext = JAXBContext.newInstance(CourseXSDListWrapper.class);
+        JAXBContext jaxbContext = JAXBContext.newInstance(CoursesXSD.class);
         Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
         StringReader reader = new StringReader(xml);
-        CourseXSDListWrapper wrapper = (CourseXSDListWrapper) unmarshaller.unmarshal(new StreamSource(reader));
+        CoursesXSD courses = (CoursesXSD) unmarshaller.unmarshal(new StreamSource(reader));
 
-        return wrapper.getCourses();
+        return courses.getCourseXSD();
     }
 
     public List<CourseXSDDTO> getDiscoveredCourses() throws Exception {
-        List<AdvancedCourseXSD> advCourses = fetchAndParse();
+        List<CoursesXSD.CourseXSD> advCourses = fetchAndParse();
 
         if (advCourses == null || advCourses.isEmpty()) {
             throw new EntityNotFoundException("Courses not found");

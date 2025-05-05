@@ -1,6 +1,5 @@
 package org.example.springtaskdocker.UnitTests.Mapper;
 
-import generated.AdvancedCourseXSD;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.junit.jupiter.api.Test;

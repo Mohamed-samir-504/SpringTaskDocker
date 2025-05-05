@@ -4,46 +4,22 @@
            xmlns="http://example.org/course"
            elementFormDefault="qualified">
 
-    <!-- Wrapper element -->
-    <xs:element name="courses" type="CoursesXSD"/>
-
-    <!-- Course element -->
-    <xs:element name="course" type="CourseXSD"/>
-
-    <!-- AdvancedCourse element -->
-    <xs:element name="advancedCourse" type="AdvancedCourseXSD"/>
-
-    <!-- Course base type -->
-    <xs:complexType name="CourseXSD">
-        <xs:sequence>
-            <xs:element name="id" type="xs:long"/>
-            <xs:element name="name" type="xs:string"/>
-            <xs:element name="description" type="xs:string"/>
-            <xs:element name="credit" type="xs:int"/>
-        </xs:sequence>
-    </xs:complexType>
-
-    <!-- AdvancedCourse extended type -->
-    <xs:complexType name="AdvancedCourseXSD">
-        <xs:complexContent>
-            <xs:extension base="CourseXSD">
-                <xs:sequence>
-                    <xs:element name="prerequisites" type="xs:string" minOccurs="0"/>
-                    <xs:element name="level" type="xs:string" minOccurs="0"/>
-                </xs:sequence>
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-
-    <!-- Courses wrapper type -->
-    <xs:complexType name="CoursesXSD">
-        <xs:sequence>
-            <xs:choice maxOccurs="unbounded">
-                <xs:element ref="course"/>
-                <xs:element ref="advancedCourse"/>
-            </xs:choice>
-        </xs:sequence>
-    </xs:complexType>
+    <xs:element name="CoursesXSD">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="CourseXSD" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="id" type="xs:long"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="description" type="xs:string"/>
+                            <xs:element name="credit" type="xs:int"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 
 </xs:schema>
 

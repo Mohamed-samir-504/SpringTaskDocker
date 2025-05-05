@@ -1,6 +1,5 @@
 package org.example.springtaskdocker.UnitTests.Model;
 
-import generated.CourseXSD;
 import generated.CoursesXSD;
 import org.junit.jupiter.api.Test;
 

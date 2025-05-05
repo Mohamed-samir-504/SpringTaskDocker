@@ -1,6 +1,6 @@
 package org.example.springtaskdocker.Mapper;
 
-import generated.AdvancedCourseXSD;
+import generated.CoursesXSD;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -12,16 +12,13 @@ public interface CourseXSDMapper {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "prerequisites", target = "prerequisites")
-    CourseXSDDTO toDto(AdvancedCourseXSD entity);
+    CourseXSDDTO toDto(CoursesXSD.CourseXSD entity);
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "prerequisites", target = "prerequisites")
-    AdvancedCourseXSD toEntity(CourseXSDDTO dto);
+    CoursesXSD.CourseXSD toEntity(CourseXSDDTO dto);
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    @Mapping(source = "prerequisites", target = "prerequisites")
-    List<CourseXSDDTO> toDtoList(List<AdvancedCourseXSD> advCourses);
+    List<CourseXSDDTO> toDtoList(List<CoursesXSD.CourseXSD> advCourses);
 }

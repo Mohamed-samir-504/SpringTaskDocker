@@ -1,6 +1,5 @@
 package org.example.springtaskdocker.UnitTests.Model;
 
-import generated.AdvancedCourseXSD;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
