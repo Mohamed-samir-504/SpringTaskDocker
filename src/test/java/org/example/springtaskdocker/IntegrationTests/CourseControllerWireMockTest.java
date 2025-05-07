@@ -69,12 +69,12 @@ public class CourseControllerWireMockTest {
                         .header("x-validation-report", "true"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.length()").value(2)) // 2 courses returned
-                .andExpect(jsonPath("$[0].name").value("Business analysis"))
-                .andExpect(jsonPath("$[0].description").value("Learn Business analysis"))
-                .andExpect(jsonPath("$[0].credit").value(3))
-                .andExpect(jsonPath("$[1].name").value("Business administration"))
-                .andExpect(jsonPath("$[1].description").value("Learn Business administration"))
-                .andExpect(jsonPath("$[1].credit").value(4));
+                .andExpect(jsonPath("$.data.length()").value(2)) // 2 courses returned
+                .andExpect(jsonPath("$.data[0].name").value("Business analysis"))
+                .andExpect(jsonPath("$.data[0].description").value("Learn Business analysis"))
+                .andExpect(jsonPath("$.data[0].credit").value(3))
+                .andExpect(jsonPath("$.data[1].name").value("Business administration"))
+                .andExpect(jsonPath("$.data[1].description").value("Learn Business administration"))
+                .andExpect(jsonPath("$.data[1].credit").value(4));
     }
 }

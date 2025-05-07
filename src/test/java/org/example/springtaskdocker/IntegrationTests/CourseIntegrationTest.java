@@ -50,8 +50,8 @@ class CourseIntegrationTest {
                         .header("x-validation-report", "true")
                         .param("name", "Testing"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Testing"))
-                .andExpect(jsonPath("$.description").value("Testing course"));
+                .andExpect(jsonPath("$.data.name").value("Testing"))
+                .andExpect(jsonPath("$.data.description").value("Testing course"));
 
         courseService.deleteCourseByName("Testing");
     }

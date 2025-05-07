@@ -28,10 +28,10 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<Map<String,Object>> handleIllegalArgument(IllegalArgumentException ex) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
                 "message", ex.getMessage(),
                 "timestamp", LocalDateTime.now(),
-                "status", HttpStatus.NOT_FOUND.value()
+                "status", HttpStatus.BAD_REQUEST.value()
         ));
     }
 

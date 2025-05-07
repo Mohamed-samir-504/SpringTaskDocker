@@ -84,7 +84,7 @@ public class CourseController {
     public ResponseEntity<Map<String, Object>> submitCourse(@ModelAttribute CourseDTO courseDTO) {
         courseService.addCourse(courseDTO);
         return ResponseEntity.ok(Map.of(
-                "message", "Course updated successfully",
+                "message", "Course added successfully",
                 "timestamp", LocalDateTime.now()
         ));
     }

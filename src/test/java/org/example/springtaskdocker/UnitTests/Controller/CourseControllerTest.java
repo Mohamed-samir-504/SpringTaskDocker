@@ -60,11 +60,15 @@ public class CourseControllerTest {
         when(courseService.getCourseByName("Spring")).thenReturn(courseDTO);
 
 
-        mockMvc.perform(get("/courses").with(httpBasic("admin", "admin123"))
-                        .header("x-validation-report", "true").param("name", "Spring"))
+        mockMvc.perform(get("/courses")
+                        .with(httpBasic("admin", "admin123"))
+                        .header("x-validation-report", "true")
+                        .param("name", "Spring"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.name").value("Spring"))
-                .andExpect(jsonPath("$.description").value("Spring course"));
+                .andExpect(jsonPath("$.status").value(200))
+                .andExpect(jsonPath("$.data.name").value("Spring"))
+                .andExpect(jsonPath("$.data.description").value("Spring course"))
+                .andExpect(jsonPath("$.timestamp").exists());
     }
 
     @Test
@@ -85,11 +89,11 @@ public class CourseControllerTest {
         mockMvc.perform(get("/courses/all").with(httpBasic("admin", "admin123"))
                         .header("x-validation-report", "true"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.length()").value(2))
-                .andExpect(jsonPath("$[0].name").value("Java"))
-                .andExpect(jsonPath("$[0].description").value("Java course"))
-                .andExpect(jsonPath("$[1].name").value("Spring"))
-                .andExpect(jsonPath("$[1].description").value("Spring course"));
+                .andExpect(jsonPath("$.data.length()").value(2))
+                .andExpect(jsonPath("$.data[0].name").value("Java"))
+                .andExpect(jsonPath("$.data[0].description").value("Java course"))
+                .andExpect(jsonPath("$.data[1].name").value("Spring"))
+                .andExpect(jsonPath("$.data[1].description").value("Spring course"));
 
     }
 
@@ -135,7 +139,8 @@ public class CourseControllerTest {
                         .param("name", "Java")
                         .param("description", "Java Course"))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Course added successfully."));
+                .andExpect(jsonPath("$.message").value("Course added successfully"));
+
 
         verify(courseService).addCourse(any(CourseDTO.class));
     }
@@ -148,7 +153,7 @@ public class CourseControllerTest {
                         .header("x-validation-report", "true")
                         .with(httpBasic("admin", "admin123")))
                         .andExpect(status().isOk())
-                        .andExpect(content().string("Course deleted successfully"));
+                .andExpect(jsonPath("$.message").value("Course deleted successfully"));
 
         verify(courseService).deleteCourse(courseId);
     }
@@ -173,7 +178,7 @@ public class CourseControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk())
-                .andExpect(content().string("Course updated successfully."));
+                .andExpect(jsonPath("$.message").value("Course updated successfully"));
 
     }
 
