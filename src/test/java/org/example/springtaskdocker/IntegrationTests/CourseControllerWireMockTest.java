@@ -48,20 +48,20 @@ public class CourseControllerWireMockTest {
                         .withStatus(200)
                         .withHeader("Content-Type", "application/xml")
                         .withBody("""
-                        <courses xmlns="http://example.org/course">
-                              <course>
+                        <CoursesXSD xmlns="http://example.org/course">
+                              <CourseXSD>
                                    <id>1</id>
                                    <name>Business analysis</name>
                                    <description>Learn Business analysis</description>
                                    <credit>3</credit>
-                              </course>
-                              <course>
+                              </CourseXSD>
+                              <CourseXSD>
                                    <id>2</id>
                                    <name>Business administration</name>
                                    <description>Learn Business administration</description>
                                    <credit>4</credit>
-                              </course>
-                        </courses>
+                              </CourseXSD>
+                        </CoursesXSD>
                     """)));
 
 

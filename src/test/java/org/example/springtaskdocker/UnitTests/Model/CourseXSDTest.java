@@ -1,12 +1,15 @@
 package org.example.springtaskdocker.UnitTests.Model;
 
+import generated.CoursesXSD;
 import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CourseXSDTest {
 
     @Test
     void gettersAndSetters_shouldWorkCorrectly() {
-        CourseXSD course = new CourseXSD();
+        CoursesXSD.CourseXSD course = new CoursesXSD.CourseXSD();
 
         long expectedId = 1L;
         String expectedName = "Java";

@@ -13,7 +13,7 @@ public class CoursesXSDTest {
     void getCourseOrAdvancedCourse_whenUninitialized_returnsNonNullList() {
         CoursesXSD courses = new CoursesXSD();
 
-        List<CourseXSD> list = courses.getCourseOrAdvancedCourse();
+        List<CoursesXSD.CourseXSD> list = courses.getCourseXSD();
 
         assertNotNull(list);
         assertTrue(list.isEmpty());
@@ -23,13 +23,13 @@ public class CoursesXSDTest {
     void getCourseOrAdvancedCourse_returnsLiveListReference() {
         CoursesXSD courses = new CoursesXSD();
 
-        List<CourseXSD> list1 = courses.getCourseOrAdvancedCourse();
-        CourseXSD course = new CourseXSD();
+        List<CoursesXSD.CourseXSD> list1 = courses.getCourseXSD();
+        CoursesXSD.CourseXSD course = new CoursesXSD.CourseXSD();
         course.setName("Java");
 
         list1.add(course);
 
-        List<CourseXSD> list2 = courses.getCourseOrAdvancedCourse();
+        List<CoursesXSD.CourseXSD> list2 = courses.getCourseXSD();
 
         assertEquals(1, list2.size());
         assertSame(list1, list2);

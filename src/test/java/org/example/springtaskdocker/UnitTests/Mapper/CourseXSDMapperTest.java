@@ -1,5 +1,6 @@
 package org.example.springtaskdocker.UnitTests.Mapper;
 
+import generated.CoursesXSD;
 import org.example.springtaskdocker.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.junit.jupiter.api.Test;
@@ -15,19 +16,16 @@ public class CourseXSDMapperTest {
 
     @Test
     void toDto_validCourse_returnsCorrectDto() {
-        AdvancedCourseXSD course = new AdvancedCourseXSD();
+        CoursesXSD.CourseXSD course = new CoursesXSD.CourseXSD();
         course.setId(1L);
         course.setName("AI");
         course.setDescription("Intro to AI");
         course.setCredit(4);
-        course.setPrerequisites("Math");
-        course.setLevel("Advanced");
 
         CourseXSDDTO dto = courseXSDMapper.toDto(course);
 
         assertEquals("AI", dto.getName());
         assertEquals("Intro to AI", dto.getDescription());
-        assertEquals("Math", dto.getPrerequisites());
         assertEquals(4, dto.getCredit());
     }
 
@@ -44,31 +42,29 @@ public class CourseXSDMapperTest {
         dto.setName("Spring Boot");
         dto.setDescription("Spring Web Development");
         dto.setCredit(3);
-        dto.setPrerequisites("Java");
 
-        AdvancedCourseXSD course = courseXSDMapper.toEntity(dto);
+        CoursesXSD.CourseXSD course = courseXSDMapper.toEntity(dto);
 
         assertEquals("Spring Boot", course.getName());
         assertEquals("Spring Web Development", course.getDescription());
-        assertEquals("Java", course.getPrerequisites());
         assertEquals(3, course.getCredit());
     }
 
     @Test
     void toEntity_nullDto_returnsNull() {
-        AdvancedCourseXSD course = courseXSDMapper.toEntity(null);
+        CoursesXSD.CourseXSD course = courseXSDMapper.toEntity(null);
         assertNull(course);
     }
 
     @Test
     void toDtoList_validList_returnsCorrectDtoList() {
-        AdvancedCourseXSD c1 = new AdvancedCourseXSD();
+        CoursesXSD.CourseXSD c1 = new CoursesXSD.CourseXSD();
         c1.setId(1L);
         c1.setName("Java");
         c1.setDescription("Core Java");
         c1.setCredit(3);
 
-        AdvancedCourseXSD c2 = new AdvancedCourseXSD();
+        CoursesXSD.CourseXSD c2 = new CoursesXSD.CourseXSD();
         c2.setId(2L);
         c2.setName("ML");
         c2.setDescription("Machine Learning");
