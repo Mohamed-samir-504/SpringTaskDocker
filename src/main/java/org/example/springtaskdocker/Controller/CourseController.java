@@ -9,11 +9,14 @@ import org.example.springtaskdocker.Service.ExternalXSDService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class CourseController {
@@ -33,17 +36,27 @@ public class CourseController {
     //shows one course by its name
     //Using parameter request
     @GetMapping("/courses")
-    public ResponseEntity<CourseDTO> viewCourse(@RequestParam String name) {
+    public ResponseEntity<Map<String, Object>> viewCourse(@RequestParam String name) {
 
-        return ResponseEntity.ok(courseService.getCourseByName(name));
+        return ResponseEntity.ok(Map.of(
+                "timestamp", LocalDateTime.now(),
+                "message", "Courses retrieved successfully",
+                "status", HttpStatus.OK.value(),
+                "data", courseService.getCourseByName(name)
+        ));
 
 
     }
 
     //Shows all courses
     @GetMapping("/courses/all")
-    public ResponseEntity<List<CourseDTO>> viewAllCourses() {
-        return ResponseEntity.ok(courseService.getRecommendedCourses());
+    public ResponseEntity<Map<String, Object>> viewAllCourses() {
+        return ResponseEntity.ok(Map.of(
+                "timestamp", LocalDateTime.now(),
+                "message", "Courses retrieved successfully",
+                "status", HttpStatus.OK.value(),
+                "data", courseService.getRecommendedCourses()
+        ));
 
     }
 
@@ -68,29 +81,43 @@ public class CourseController {
 
     // Handles the form submission using model attribute
     @PostMapping("/new-course")
-    public ResponseEntity<String> submitCourse(@ModelAttribute CourseDTO courseDTO) {
+    public ResponseEntity<Map<String, Object>> submitCourse(@ModelAttribute CourseDTO courseDTO) {
         courseService.addCourse(courseDTO);
-        return ResponseEntity.ok("Course added successfully.");
+        return ResponseEntity.ok(Map.of(
+                "message", "Course updated successfully",
+                "timestamp", LocalDateTime.now()
+        ));
     }
 
     //using request body and path variable
     @PatchMapping("/courses/{id}")
-    public ResponseEntity<String> updateCourse(@RequestBody Course course, @PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> updateCourse(@RequestBody Course course, @PathVariable Long id) {
         Course originalCourse = courseService.getCourseById(id);
         courseService.updateCourse(originalCourse,course);
-        return ResponseEntity.ok("Course updated successfully.");
+        return ResponseEntity.ok(Map.of(
+                "message", "Course updated successfully",
+                "timestamp", LocalDateTime.now()
+        ));
     }
 
     @DeleteMapping("/courses/{id}")
-    public ResponseEntity<String> deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<Map<String, Object>> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
-        return ResponseEntity.ok("Course deleted successfully");
+        return ResponseEntity.ok(Map.of(
+                "message", "Course deleted successfully",
+                "timestamp", LocalDateTime.now()
+        ));
     }
 
 
 
     @GetMapping("/coursesXSD")
-    public ResponseEntity<List<CourseXSDDTO>> getCourseXSDList() throws Exception {
-        return ResponseEntity.ok(externalXSDService.getDiscoveredCourses());
+    public ResponseEntity<Map<String, Object>> getCourseXSDList() throws Exception {
+        return ResponseEntity.ok(Map.of(
+                "timestamp", LocalDateTime.now(),
+                "message", "Courses retrieved successfully",
+                "status", HttpStatus.OK.value(),
+                "data", externalXSDService.getDiscoveredCourses()
+        ));
     }
 }
