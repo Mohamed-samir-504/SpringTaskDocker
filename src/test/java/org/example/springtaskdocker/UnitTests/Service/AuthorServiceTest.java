@@ -13,6 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
+import static java.util.Optional.empty;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
@@ -29,19 +30,19 @@ public class AuthorServiceTest {
     void getAuthorByEmail_authorExists_shouldReturnCorrectAuthor() {
         Author mockAuthor = new Author(1,"mtolba","mtolba@sumerge.com");
 
-        when(authorRepository.findByEmail(mockAuthor.getEmail())).thenReturn(Optional.of(mockAuthor));
+        when(authorRepository.findByEmail(mockAuthor.getEmail())).thenReturn(mockAuthor);
 
-        Optional<Author> result = authorService.getAuthorByEmail("mtolba@sumerge.com");
+        Author result = authorService.getAuthorByEmail("mtolba@sumerge.com");
 
-        assertEquals(1, result.get().getAuthor_id());
-        assertEquals("mtolba", result.get().getName());
-        assertEquals("mtolba@sumerge.com", result.get().getEmail());
+        assertEquals(1, result.getAuthor_id());
+        assertEquals("mtolba", result.getName());
+        assertEquals("mtolba@sumerge.com", result.getEmail());
 
     }
 
     @Test
     void getAuthorByEmail_authorDoesNotExist_shouldThrowEntityNotFoundException() {
-        when(authorRepository.findByEmail("missing@example.com")).thenReturn(Optional.empty());
+        when(authorRepository.findByEmail("missing@example.com")).thenReturn(null);
 
         assertThrows(EntityNotFoundException.class, () ->
                 authorService.getAuthorByEmail("missing@example.com")

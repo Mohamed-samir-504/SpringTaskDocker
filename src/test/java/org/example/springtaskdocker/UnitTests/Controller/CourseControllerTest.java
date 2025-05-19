@@ -111,11 +111,11 @@ public class CourseControllerTest {
         mockMvc.perform(get("/courses/pages").with(httpBasic("admin", "admin123"))
                         .header("x-validation-report", "true").param("page", "0").param("size", "3"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.pageable.pageSize").value(3))
-                .andExpect(jsonPath("$.pageable.pageNumber").value(0))
-                .andExpect(jsonPath("$.content[0].name").value("Java"))
-                .andExpect(jsonPath("$.content[0].description").value("Java course"))
-                .andExpect(jsonPath("$.content[2].description").value("C++ course"));
+                .andExpect(jsonPath("$.data.pageable.pageSize").value(3))
+                .andExpect(jsonPath("$.data.pageable.pageNumber").value(0))
+                .andExpect(jsonPath("$.data.content[0].name").value("Java"))
+                .andExpect(jsonPath("$.data.content[0].description").value("Java course"))
+                .andExpect(jsonPath("$.data.content[2].description").value("C++ course"));
 
     }
 

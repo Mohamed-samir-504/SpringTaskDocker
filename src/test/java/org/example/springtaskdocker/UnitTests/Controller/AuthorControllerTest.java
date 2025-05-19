@@ -35,7 +35,7 @@ public class AuthorControllerTest {
     void findByEmail_shouldReturnCorrectAuthor() throws Exception {
         Author author = new Author(1,"mtolba","mtolba@sumerge.com");
 
-        when(authorService.getAuthorByEmail("mtolba@sumerge.com")).thenReturn(Optional.of(author));
+        when(authorService.getAuthorByEmail("mtolba@sumerge.com")).thenReturn(author);
 
         mockMvc.perform(get("/author")
                         .with(httpBasic("admin", "admin123"))
@@ -43,9 +43,9 @@ public class AuthorControllerTest {
                         .param("email", author.getEmail()))
 
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.author_id").value(1))
-                .andExpect(jsonPath("$.name").value("mtolba"))
-                .andExpect(jsonPath("$.email").value("mtolba@sumerge.com"));
+                .andExpect(jsonPath("$.data.author_id").value(1))
+                .andExpect(jsonPath("$.data.name").value("mtolba"))
+                .andExpect(jsonPath("$.data.email").value("mtolba@sumerge.com"));
     }
 
 }
