@@ -1,8 +1,11 @@
 
 package org.example.springtaskdocker.Controller;
 
+import org.example.springtaskdocker.Common.ApiResponse;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
 import org.example.springtaskdocker.Model.Entity.Author;
 import org.example.springtaskdocker.Service.AuthorService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,11 +20,13 @@ public class AuthorController {
     }
 
     @GetMapping("/author")
-    public ResponseEntity<Author> findByEmail(@RequestParam String email){
+    public ResponseEntity<ApiResponse<Author>> findByEmail(@RequestParam String email){
 
-        return authorService.getAuthorByEmail(email)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Author retrieved successfully",
+                HttpStatus.OK.value(),
+                authorService.getAuthorByEmail(email))
+        );
 
     }
 }

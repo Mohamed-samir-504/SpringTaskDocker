@@ -9,5 +9,5 @@ import java.util.Optional;
 @Repository
 public interface AuthorRepository extends JpaRepository<Author, Long> {
 
-    public Optional<Author> findByEmail(String email);
+    public Author findByEmail(String email);
 }

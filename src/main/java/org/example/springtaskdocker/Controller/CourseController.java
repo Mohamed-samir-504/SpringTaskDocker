@@ -41,7 +41,7 @@ public class CourseController {
 
         return ResponseEntity.ok(new ApiResponse<>(
                         "Course retrieved successfully",
-                        200,
+                        HttpStatus.OK.value(),
                         courseService.getCourseByName(name))
         );
 

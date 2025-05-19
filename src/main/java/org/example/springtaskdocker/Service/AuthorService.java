@@ -1,6 +1,7 @@
 package org.example.springtaskdocker.Service;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.example.springtaskdocker.Repository.AuthorRepository;
 import org.example.springtaskdocker.Model.Entity.Author;
 import org.springframework.stereotype.Service;
@@ -15,10 +16,13 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-    public Optional<Author> getAuthorByEmail(String email){
+    public Author getAuthorByEmail(String email){
 
-        return Optional.ofNullable(authorRepository.findByEmail(email)
-                .orElseThrow(() -> new EntityNotFoundException("Author with email " + email + " not found")));
+        Author author = authorRepository.findByEmail(email);
+        if (author == null) {
+            throw new EntityNotFoundException("Author with email " + email + " not found");
+        }
+        return author;
     }
 
 }
