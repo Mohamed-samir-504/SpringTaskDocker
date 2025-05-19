@@ -1,4 +1,4 @@
-package org.example.springtaskdocker.DTO;
+package org.example.springtaskdocker.Model.DTO;
 
 public class CourseDTO {
 

@@ -1,9 +1,10 @@
 package org.example.springtaskdocker.Controller;
 
 
-import org.example.springtaskdocker.DTO.CourseDTO;
-import org.example.springtaskdocker.DTO.CourseXSDDTO;
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Common.ApiResponse;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
+import org.example.springtaskdocker.Model.DTO.CourseXSDDTO;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.example.springtaskdocker.Service.CourseService;
 import org.example.springtaskdocker.Service.ExternalXSDService;
 import org.springframework.data.domain.Page;
@@ -21,9 +22,9 @@ import java.util.Map;
 @RestController
 public class CourseController {
 
-    //It will use SoftwareCourseRecommender bean
-    CourseService courseService;
-    ExternalXSDService externalXSDService;
+
+    private final CourseService courseService;
+    private final ExternalXSDService externalXSDService;
 
 
     public CourseController(CourseService courseService, ExternalXSDService externalXSDService) {
@@ -36,39 +37,39 @@ public class CourseController {
     //shows one course by its name
     //Using parameter request
     @GetMapping("/courses")
-    public ResponseEntity<Map<String, Object>> viewCourse(@RequestParam String name) {
+    public ResponseEntity<ApiResponse<CourseDTO>> viewCourse(@RequestParam String name) {
 
-        return ResponseEntity.ok(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "message", "Courses retrieved successfully",
-                "status", HttpStatus.OK.value(),
-                "data", courseService.getCourseByName(name)
-        ));
-
+        return ResponseEntity.ok(new ApiResponse<>(
+                        "Course retrieved successfully",
+                        200,
+                        courseService.getCourseByName(name))
+        );
 
     }
 
     //Shows all courses
     @GetMapping("/courses/all")
-    public ResponseEntity<Map<String, Object>> viewAllCourses() {
-        return ResponseEntity.ok(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "message", "Courses retrieved successfully",
-                "status", HttpStatus.OK.value(),
-                "data", courseService.getRecommendedCourses()
-        ));
-
+    public ResponseEntity<ApiResponse<List<CourseDTO>>> viewAllCourses() {
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Courses retrieved successfully",
+                HttpStatus.OK.value(),
+                courseService.getRecommendedCourses())
+        );
     }
 
     //show paginated response
     @GetMapping("/courses/pages")
-    public ResponseEntity<Page<Course>> getCourses(
+    public ResponseEntity<ApiResponse<Page<Course>>> getCourses(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "3") int size) {
 
         Pageable pageable = PageRequest.of(page, size);
-        Page<Course> courses = courseService.getCoursesPaginated(pageable);
-        return ResponseEntity.ok(courses);
+
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Courses retrieved successfully",
+                HttpStatus.OK.value(),
+                courseService.getCoursesPaginated(pageable))
+        );
     }
 
 
@@ -81,43 +82,41 @@ public class CourseController {
 
     // Handles the form submission using model attribute
     @PostMapping("/new-course")
-    public ResponseEntity<Map<String, Object>> submitCourse(@ModelAttribute CourseDTO courseDTO) {
+    public ResponseEntity<ApiResponse<Object>> submitCourse(@ModelAttribute CourseDTO courseDTO) {
         courseService.addCourse(courseDTO);
-        return ResponseEntity.ok(Map.of(
-                "message", "Course added successfully",
-                "timestamp", LocalDateTime.now()
-        ));
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Course added successfully",
+                HttpStatus.OK.value())
+        );
     }
 
     //using request body and path variable
     @PatchMapping("/courses/{id}")
-    public ResponseEntity<Map<String, Object>> updateCourse(@RequestBody Course course, @PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Object>> updateCourse(@RequestBody Course course, @PathVariable Long id) {
         Course originalCourse = courseService.getCourseById(id);
         courseService.updateCourse(originalCourse,course);
-        return ResponseEntity.ok(Map.of(
-                "message", "Course updated successfully",
-                "timestamp", LocalDateTime.now()
-        ));
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Course updated successfully",
+                HttpStatus.OK.value())
+        );
     }
 
     @DeleteMapping("/courses/{id}")
-    public ResponseEntity<Map<String, Object>> deleteCourse(@PathVariable Long id) {
+    public ResponseEntity<ApiResponse<Object>> deleteCourse(@PathVariable Long id) {
         courseService.deleteCourse(id);
-        return ResponseEntity.ok(Map.of(
-                "message", "Course deleted successfully",
-                "timestamp", LocalDateTime.now()
-        ));
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Course deleted successfully",
+                HttpStatus.OK.value())
+        );
     }
 
 
-
     @GetMapping("/coursesXSD")
-    public ResponseEntity<Map<String, Object>> getCourseXSDList() throws Exception {
-        return ResponseEntity.ok(Map.of(
-                "timestamp", LocalDateTime.now(),
-                "message", "Courses retrieved successfully",
-                "status", HttpStatus.OK.value(),
-                "data", externalXSDService.getDiscoveredCourses()
-        ));
+    public ResponseEntity<ApiResponse<List<CourseXSDDTO>>> getCourseXSDList() throws Exception {
+        return ResponseEntity.ok(new ApiResponse<>(
+                "Courses retrieved successfully",
+                HttpStatus.OK.value(),
+                externalXSDService.getDiscoveredCourses())
+        );
     }
 }

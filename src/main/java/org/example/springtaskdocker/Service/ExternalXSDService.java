@@ -5,7 +5,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.Unmarshaller;
 import org.example.springtaskdocker.Client.ExternalXSDClient;
-import org.example.springtaskdocker.DTO.CourseXSDDTO;
+import org.example.springtaskdocker.Model.DTO.CourseXSDDTO;
 import org.example.springtaskdocker.Mapper.CourseXSDMapper;
 import org.springframework.stereotype.Service;
 
@@ -17,9 +17,9 @@ import java.util.List;
 public class ExternalXSDService {
 
 
-    private ExternalXSDClient externalXSDClient;
+    private final ExternalXSDClient externalXSDClient;
 
-    private CourseXSDMapper courseXSDMapper;
+    private final CourseXSDMapper courseXSDMapper;
 
     public ExternalXSDService(ExternalXSDClient externalXSDClient, CourseXSDMapper courseXSDMapper) {
 

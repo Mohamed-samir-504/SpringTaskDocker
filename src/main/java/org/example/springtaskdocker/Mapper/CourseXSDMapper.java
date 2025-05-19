@@ -1,7 +1,7 @@
 package org.example.springtaskdocker.Mapper;
 
 import generated.CoursesXSD;
-import org.example.springtaskdocker.DTO.CourseXSDDTO;
+import org.example.springtaskdocker.Model.DTO.CourseXSDDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

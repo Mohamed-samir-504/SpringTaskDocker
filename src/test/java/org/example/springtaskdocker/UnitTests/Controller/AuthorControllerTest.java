@@ -1,7 +1,7 @@
 package org.example.springtaskdocker.UnitTests.Controller;
 
 import org.example.springtaskdocker.Controller.AuthorController;
-import org.example.springtaskdocker.Model.Author;
+import org.example.springtaskdocker.Model.Entity.Author;
 import org.example.springtaskdocker.Config.SecurityConfig;
 import org.example.springtaskdocker.Service.AuthorService;
 import org.junit.jupiter.api.*;

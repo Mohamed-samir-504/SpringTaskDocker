@@ -1,7 +1,7 @@
 package org.example.springtaskdocker.Mapper;
 
-import org.example.springtaskdocker.DTO.CourseDTO;
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

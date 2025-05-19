@@ -1,10 +1,10 @@
 package org.example.springtaskdocker.UnitTests.Controller;
 
 import org.example.springtaskdocker.Controller.CourseController;
-import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
 import org.example.springtaskdocker.Mapper.CourseMapper;
 import org.example.springtaskdocker.Mapper.CourseXSDMapper;
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.example.springtaskdocker.Config.SecurityConfig;
 import org.example.springtaskdocker.Service.CourseService;
 import org.example.springtaskdocker.Service.ExternalXSDService;
@@ -21,11 +21,9 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.verify;
 
 import java.util.List;
-import java.util.Optional;
 
 import static org.mockito.Mockito.when;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;

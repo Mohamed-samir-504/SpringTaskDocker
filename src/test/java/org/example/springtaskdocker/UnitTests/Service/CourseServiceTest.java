@@ -1,9 +1,9 @@
 package org.example.springtaskdocker.UnitTests.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
 import org.example.springtaskdocker.Mapper.CourseMapper;
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.example.springtaskdocker.Repository.CourseRepository;
 import org.example.springtaskdocker.Service.CourseService;
 import org.junit.jupiter.api.*;

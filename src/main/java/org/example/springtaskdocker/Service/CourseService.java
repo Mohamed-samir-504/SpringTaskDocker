@@ -2,10 +2,10 @@ package org.example.springtaskdocker.Service;
 
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.springtaskdocker.DTO.CourseDTO;
+import org.example.springtaskdocker.Model.DTO.CourseDTO;
 import org.example.springtaskdocker.Mapper.CourseMapper;
 import org.example.springtaskdocker.Repository.CourseRepository;
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,8 @@ import java.util.List;
 public class CourseService {
 
 
-    private CourseRepository courseRepository;
-    private CourseMapper courseMapper;
+    private final CourseRepository courseRepository;
+    private final CourseMapper courseMapper;
 
     public CourseService(CourseRepository courseRepository, CourseMapper courseMapper) {
         this.courseRepository = courseRepository;
@@ -59,7 +59,6 @@ public class CourseService {
     }
 
     public void addCourse (CourseDTO courseDTO) {
-
         courseRepository.save(courseMapper.toEntity(courseDTO));
     }
 

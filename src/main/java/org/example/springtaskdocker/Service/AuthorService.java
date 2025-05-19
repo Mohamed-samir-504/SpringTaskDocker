@@ -2,14 +2,14 @@ package org.example.springtaskdocker.Service;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.example.springtaskdocker.Repository.AuthorRepository;
-import org.example.springtaskdocker.Model.Author;
+import org.example.springtaskdocker.Model.Entity.Author;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
 public class AuthorService {
-    private AuthorRepository authorRepository;
+    private final AuthorRepository authorRepository;
 
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;

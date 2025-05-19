@@ -1,7 +1,7 @@
 
 package org.example.springtaskdocker.Controller;
 
-import org.example.springtaskdocker.Model.Author;
+import org.example.springtaskdocker.Model.Entity.Author;
 import org.example.springtaskdocker.Service.AuthorService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

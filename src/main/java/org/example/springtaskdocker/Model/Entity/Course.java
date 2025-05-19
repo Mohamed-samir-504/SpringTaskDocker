@@ -1,4 +1,4 @@
-package org.example.springtaskdocker.Model;
+package org.example.springtaskdocker.Model.Entity;
 
 import jakarta.persistence.*;
 

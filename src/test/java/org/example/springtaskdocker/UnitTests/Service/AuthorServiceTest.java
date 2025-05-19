@@ -1,7 +1,7 @@
 package org.example.springtaskdocker.UnitTests.Service;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.example.springtaskdocker.Model.Author;
+import org.example.springtaskdocker.Model.Entity.Author;
 import org.example.springtaskdocker.Repository.AuthorRepository;
 import org.example.springtaskdocker.Service.AuthorService;
 import org.junit.jupiter.api.*;

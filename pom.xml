@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>org.example</groupId>
-    <artifactId>SpringTaskJPA</artifactId>
+    <artifactId>SpringTaskDocker</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>SpringTaskJPA</name>
-    <description>SpringTaskJPA</description>
+    <name>SpringTaskDocker</name>
+    <description>SpringTaskDocker</description>
     <url/>
     <licenses>
         <license/>

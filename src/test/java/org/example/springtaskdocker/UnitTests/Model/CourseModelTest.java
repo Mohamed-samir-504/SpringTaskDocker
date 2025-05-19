@@ -1,6 +1,6 @@
 package org.example.springtaskdocker.UnitTests.Model;
 
-import org.example.springtaskdocker.Model.Course;
+import org.example.springtaskdocker.Model.Entity.Course;
 import org.junit.jupiter.api.*;
 
 import static org.junit.jupiter.api.Assertions.*;

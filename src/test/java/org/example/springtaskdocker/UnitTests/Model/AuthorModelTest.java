@@ -1,6 +1,6 @@
 package org.example.springtaskdocker.UnitTests.Model;
 
-import org.example.springtaskdocker.Model.Author;
+import org.example.springtaskdocker.Model.Entity.Author;
 import org.junit.jupiter.api.*;
 
 import java.time.LocalDate;
