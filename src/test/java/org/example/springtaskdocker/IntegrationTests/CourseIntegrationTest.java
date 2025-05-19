@@ -1,9 +1,7 @@
 package org.example.springtaskdocker.IntegrationTests;
 
-import org.example.springtaskdocker.DTO.CourseDTO;
+import jakarta.transaction.Transactional;
 import org.example.springtaskdocker.Mapper.CourseMapper;
-import org.example.springtaskdocker.Mapper.CourseXSDMapper;
-import org.example.springtaskdocker.Repository.CourseRepository;
 import org.example.springtaskdocker.Service.CourseService;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Test;
@@ -20,7 +18,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import org.example.springtaskdocker.Model.Course;
 
 
-import java.util.Optional;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -33,12 +30,11 @@ class CourseIntegrationTest {
     @Autowired
     private CourseService courseService;
     @Autowired
-    private CourseRepository courseRepository;
-    @Autowired
     private CourseMapper courseMapper;
 
 
     @Test
+    @Transactional
     void shouldReturnCourseDTO_whenCourseExistsByName() throws Exception {
 
         Course course = new Course();
@@ -53,6 +49,6 @@ class CourseIntegrationTest {
                 .andExpect(jsonPath("$.data.name").value("Testing"))
                 .andExpect(jsonPath("$.data.description").value("Testing course"));
 
-        courseService.deleteCourseByName("Testing");
+
     }
 }
