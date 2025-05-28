@@ -167,10 +167,10 @@ public class CourseServiceTest {
     @Test
     void updateCourse_nameAndDescriptionExists_shouldCallSaveMethod() {
         Course oldMockCourse = new Course(1L, "Java", "Java course");
-        Course newMockCourse = new Course(null,"Spring", "Spring course");
+        CourseDTO newMockCourse = new CourseDTO("Spring", "Spring course");
 
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(true);
-        courseService.updateCourse(oldMockCourse, newMockCourse);
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.of(oldMockCourse));
+        courseService.updateCourse(oldMockCourse.getId(), newMockCourse);
 
         verify(courseRepository).save(oldMockCourse);
         assertEquals("Spring", oldMockCourse.getName());
@@ -181,9 +181,10 @@ public class CourseServiceTest {
     @Test
     void updateCourse_onlyNameExists_shouldCallSaveMethod() {
         Course oldMockCourse = new Course(1L, "Java", "Java course");
-        Course newMockCourse = new Course(null,"Spring", null);
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(true);
-        courseService.updateCourse(oldMockCourse, newMockCourse);
+        CourseDTO newMockCourse = new CourseDTO("Spring", null);
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.of(oldMockCourse));
+
+        courseService.updateCourse(oldMockCourse.getId(), newMockCourse);
         verify(courseRepository).save(oldMockCourse);
         assertEquals("Spring", oldMockCourse.getName());
         assertEquals("Java course", oldMockCourse.getDescription());
@@ -193,9 +194,9 @@ public class CourseServiceTest {
     void updateCourse_onlyDescriptionExists_shouldCallSaveMethod(){
 
         Course oldMockCourse = new Course(1L, "Java", "Java course");
-        Course newMockCourse = new Course(null,null, "Intro to java");
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(true);
-        courseService.updateCourse(oldMockCourse, newMockCourse);
+        CourseDTO newMockCourse = new CourseDTO(null, "Intro to java");
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.of(oldMockCourse));
+        courseService.updateCourse(oldMockCourse.getId(), newMockCourse);
         verify(courseRepository).save(oldMockCourse);
         assertEquals("Java", oldMockCourse.getName());
         assertEquals("Intro to java", oldMockCourse.getDescription());
@@ -205,9 +206,9 @@ public class CourseServiceTest {
     @Test
     void updateCourse_valuesAreNull_shouldNotUpdate() {
         Course oldMockCourse = new Course(1L, "Java", "Java course");
-        Course newMockCourse = new Course();
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(true);
-        courseService.updateCourse(oldMockCourse, newMockCourse);
+        CourseDTO newMockCourse = new CourseDTO();
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.of(oldMockCourse));
+        courseService.updateCourse(oldMockCourse.getId(), newMockCourse);
 
         verify(courseRepository).save(oldMockCourse);
         assertEquals("Java", oldMockCourse.getName());
@@ -218,9 +219,9 @@ public class CourseServiceTest {
     @Test
     void updateCourse_newCourseIsNull_shouldNotCallSaveMethod() {
         Course oldMockCourse = new Course(1L, "Java", "Java course");
-        Course newMockCourse = null;
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(true);
-        courseService.updateCourse(oldMockCourse, newMockCourse);
+        CourseDTO newMockCourse = null;
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.of(oldMockCourse));
+        courseService.updateCourse(oldMockCourse.getId(), newMockCourse);
         verify(courseRepository, never()).save(any());
 
     }
@@ -228,10 +229,10 @@ public class CourseServiceTest {
     @Test
     void updateCourse_oldCourseDoesNotExist_shouldNotCallSaveMethod() {
         Course oldMockCourse = new Course(13L, "Java", "Java course");
-        Course newMockCourse = new Course(null, "Spring", "Spring course");
-        when(courseRepository.existsById(oldMockCourse.getId())).thenReturn(false);
+        CourseDTO newMockCourse = new CourseDTO( "Spring", "Spring course");
+        when(courseRepository.findById(oldMockCourse.getId())).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () ->
-                courseService.updateCourse(oldMockCourse,newMockCourse)
+                courseService.updateCourse(oldMockCourse.getId(),newMockCourse)
         );
 
     }

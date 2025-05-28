@@ -67,13 +67,15 @@ public class CourseService {
         Course course = courseRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Course with ID " + id + " does not exist"));
 
-        if(newCourse.getName() != null) {
-            course.setName(newCourse.getName());
+        if(newCourse!= null) {
+            if (newCourse.getName() != null) {
+                course.setName(newCourse.getName());
+            }
+            if (newCourse.getDescription() != null) {
+                course.setDescription(newCourse.getDescription());
+            }
+            courseRepository.save(course);
         }
-        if(newCourse.getDescription() != null) {
-            course.setDescription(newCourse.getDescription());
-        }
-        courseRepository.save(course);
     }
 
     public void deleteCourse(Long id) {
