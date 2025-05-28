@@ -1,4 +1,4 @@
-package org.example.springtaskdocker.UnitTests.Controller;
+package org.example.springtaskdocker.WebLayerTests.Controller;
 
 import org.example.springtaskdocker.Controller.AuthorController;
 import org.example.springtaskdocker.Model.Entity.Author;

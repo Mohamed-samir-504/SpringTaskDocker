@@ -62,20 +62,18 @@ public class CourseService {
         courseRepository.save(courseMapper.toEntity(courseDTO));
     }
 
-    public void updateCourse (Course oldCourse,Course newCourse) {
-        if (!courseRepository.existsById(oldCourse.getId())) {
-            throw new EntityNotFoundException("Course with ID " + oldCourse.getId() + " does not exist");
-        }
-        if(newCourse != null){
-            if(newCourse.getName() != null) {
-                oldCourse.setName(newCourse.getName());
-            }
-            if(newCourse.getDescription() != null) {
-                oldCourse.setDescription(newCourse.getDescription());
-            }
-            courseRepository.save(oldCourse);
-        }
+    public void updateCourse (Long id, CourseDTO newCourse) {
 
+        Course course = courseRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Course with ID " + id + " does not exist"));
+
+        if(newCourse.getName() != null) {
+            course.setName(newCourse.getName());
+        }
+        if(newCourse.getDescription() != null) {
+            course.setDescription(newCourse.getDescription());
+        }
+        courseRepository.save(course);
     }
 
     public void deleteCourse(Long id) {

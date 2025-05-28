@@ -1,4 +1,4 @@
-package org.example.springtaskdocker.UnitTests.Controller;
+package org.example.springtaskdocker.WebLayerTests.Controller;
 
 import org.example.springtaskdocker.Controller.CourseController;
 import org.example.springtaskdocker.Model.DTO.CourseDTO;
@@ -52,7 +52,6 @@ public class CourseControllerTest {
 
     @Test
     void viewCourse_shouldReturnCourseDTOByName() throws Exception {
-        Course course = new Course(1L, "Spring", "Spring course");
         CourseDTO courseDTO = new CourseDTO("Spring","Spring course");
 
         when(courseService.getCourseByName("Spring")).thenReturn(courseDTO);
@@ -71,10 +70,6 @@ public class CourseControllerTest {
 
     @Test
     void viewAllCourses_shouldReturnAllCourses() throws Exception {
-        List<Course> courseList = List.of(
-                new Course(1L, "Java", "Java course"),
-                new Course(2L, "Spring", "Spring course")
-        );
 
         List<CourseDTO> courseDTOList = List.of(
                 new CourseDTO( "Java", "Java course"),

@@ -92,9 +92,8 @@ public class CourseController {
 
     //using request body and path variable
     @PatchMapping("/courses/{id}")
-    public ResponseEntity<ApiResponse<Object>> updateCourse(@RequestBody Course course, @PathVariable Long id) {
-        Course originalCourse = courseService.getCourseById(id);
-        courseService.updateCourse(originalCourse,course);
+    public ResponseEntity<ApiResponse<Object>> updateCourse(@RequestBody CourseDTO courseDto, @PathVariable Long id) {
+        courseService.updateCourse(id,courseDto);
         return ResponseEntity.ok(new ApiResponse<>(
                 "Course updated successfully",
                 HttpStatus.OK.value())

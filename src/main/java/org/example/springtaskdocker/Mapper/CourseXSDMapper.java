@@ -20,5 +20,5 @@ public interface CourseXSDMapper {
 
     @Mapping(source = "name", target = "name")
     @Mapping(source = "description", target = "description")
-    List<CourseXSDDTO> toDtoList(List<CoursesXSD.CourseXSD> advCourses);
+    List<CourseXSDDTO> toDtoList(List<CoursesXSD.CourseXSD> courses);
 }
