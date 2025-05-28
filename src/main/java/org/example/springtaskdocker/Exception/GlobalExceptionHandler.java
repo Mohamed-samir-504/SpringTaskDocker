@@ -1,4 +1,4 @@
-package org.example.springtaskdocker.Config;
+package org.example.springtaskdocker.Exception;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.http.HttpStatus;
@@ -12,7 +12,6 @@ import java.time.LocalDateTime;
 import java.util.Map;
 
 @ControllerAdvice
-@Hidden
 public class GlobalExceptionHandler {
 
 
