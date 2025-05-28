@@ -10,7 +10,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CoursesXSDTest {
 
     @Test
-    void getCourseOrAdvancedCourse_whenUninitialized_returnsNonNullList() {
+    void getCourse_whenUninitialized_returnsNonNullList() {
         CoursesXSD courses = new CoursesXSD();
 
         List<CoursesXSD.CourseXSD> list = courses.getCourseXSD();
@@ -20,7 +20,7 @@ public class CoursesXSDTest {
     }
 
     @Test
-    void getCourseOrAdvancedCourse_returnsLiveListReference() {
+    void getCourse_returnsLiveListReference() {
         CoursesXSD courses = new CoursesXSD();
 
         List<CoursesXSD.CourseXSD> list1 = courses.getCourseXSD();

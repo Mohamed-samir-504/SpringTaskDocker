@@ -39,12 +39,12 @@ public class ExternalXSDService {
     }
 
     public List<CourseXSDDTO> getDiscoveredCourses() throws Exception {
-        List<CoursesXSD.CourseXSD> advCourses = fetchAndParse();
+        List<CoursesXSD.CourseXSD> courses = fetchAndParse();
 
-        if (advCourses == null || advCourses.isEmpty()) {
+        if (courses == null || courses.isEmpty()) {
             throw new EntityNotFoundException("Courses not found");
         }
 
-        return courseXSDMapper.toDtoList(advCourses);
+        return courseXSDMapper.toDtoList(courses);
     }
 }
