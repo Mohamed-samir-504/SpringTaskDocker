@@ -27,9 +27,10 @@ public class SecurityConfig {
                         .requestMatchers("/new-course").hasRole("ADMIN")
                         .requestMatchers("/courses/").hasAnyRole("ADMIN")
                         .requestMatchers("/coursesXSD").hasRole("ADMIN")
-                        .requestMatchers("/swagger-ui/**","/").permitAll()
+                        .requestMatchers("/swagger-ui/**","/","/api/dummy-todos").permitAll()
                         .anyRequest().authenticated()
                 )
+                .cors(AbstractHttpConfigurer::disable)
                 .csrf(AbstractHttpConfigurer::disable)
                 .headers(headers -> headers.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
                 .httpBasic(Customizer.withDefaults());
